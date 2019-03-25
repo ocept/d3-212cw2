@@ -46,7 +46,7 @@ function update(){
                 svg.selectAll(".dot").filter(function(d2){
                     return d === d2.Region
                 })
-                    .style('r', function(){
+                    .attr('r', function(){
                         return (Number(d3.select(this).attr('r')) + 2)
                     })
                 svg.selectAll(".dot").filter(function(d2){
@@ -56,7 +56,7 @@ function update(){
             })
             .on("mouseout", function(d){
                 svg.selectAll(".dot")
-                    .style("r", function(dd){ 
+                    .attr("r", function(dd){ 
                         return popscale(dd.pop_value
                             );})
                     .style('opacity','0.6')
