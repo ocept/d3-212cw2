@@ -116,8 +116,9 @@ function update(){
             .on('mouseover', function(d){
                 ttip.html(d.Location)
                 .style("opacity",1)
-                .style("left",d3.event.pageX + "px")
+                .style("left",d3.event.pageX + 10 + "px")
                 .style("top", d3.event.pageY + "px")
+                .style("background", areaColours[d.Region])
             })
             .on("mouseout", function(d){
                 ttip.style("opacity",0)
