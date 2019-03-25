@@ -33,3 +33,7 @@ div.tooltip {
 .slidercontainer{
     width: 100%;
 }
+.legend1{
+    font: 12px sans-serif;	
+    cursor: pointer;
+}
