@@ -33,21 +33,14 @@ function update(){
             console.log(error)
         }
 
-        // //convert to numbers
-        // data.forEach(function(d)
-        // {
-        //     d.Year = +d.Year
-        //     d.LE_value = +d.LE_value
-        //     d.GDP_value = +d.GDP_value
-        //     d.pop_value = +d.pop_value
-        // });
+        //add legend
         var offset = 15
         var legend1 = svg.selectAll('.legend1')
             .data(Object.keys(areaColours))
             .enter().append('g')
             .attr("class", "legend1")
             .attr("transform", function(d,i){
-                return "translate(0," + i*offset+")"
+                return "translate(5," + i*offset+")"
             })
             .on("mouseover", function(d){
                 svg.selectAll(".dot").filter(function(d2){
