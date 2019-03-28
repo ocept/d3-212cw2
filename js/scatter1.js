@@ -68,7 +68,6 @@ function update(){
             .style("fill", function(d,i){
                 return areaColours[d]
             })
-            //.style("stroke","#bbbbbb")
 
         legend1.append('text')
             .attr("x",20)
@@ -108,9 +107,6 @@ function update(){
         var popscale = d3.scaleSqrt()
             .domain([100000, 1386395000])
             .range([3,20])
-        
-        //console.log(popscale(100000))
-        //console.log(popscale(10000000))
 
         new_dots.merge(dots)
             .on('mouseover', function(d){
