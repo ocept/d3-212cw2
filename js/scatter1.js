@@ -40,7 +40,7 @@ function update(){
             .enter().append('g')
             .attr("class", "legend1")
             .attr("transform", function(d,i){
-                return "translate(5," + i*offset+")"
+                return "translate(10," + i*offset+")"
             })
             .on("mouseover", function(d){
                 svg.selectAll(".dot").filter(function(d2){
@@ -63,16 +63,16 @@ function update(){
             })
             
         legend1.append('rect')
-            .attr("width", 10)
-            .attr("height",10)
+            .attr("width", 14)
+            .attr("height",14)
             .style("fill", function(d,i){
                 return areaColours[d]
             })
-            .style("stroke","#bbbbbb")
+            //.style("stroke","#bbbbbb")
 
         legend1.append('text')
             .attr("x",20)
-            .attr("y",10)
+            .attr("y",13)
             .text(function(d){return d})
 
         var dots = svg.selectAll(".dot")
