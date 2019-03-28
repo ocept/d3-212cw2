@@ -21,18 +21,16 @@ var areaColours = {
 width = width - margin.left - margin.right;
 height = height - margin.top - margin.bottom;
 
-var ttip = d3.select("body").append("div")
+let ttip = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0)
 var t = d3.transition()
     .duration(100)
-
+    
+let csvData = d3.csv('/finalData/LE_Scatter.csv');
 function update(){
-    d3.csv('/finalData/LE_Scatter.csv', function(error, data){
-        if(error){
-            console.log(error)
-        }
-
+    
+    csvData.then(function(data){
         //add legend
         var offset = 15
         var legend1 = svg.selectAll('.legend1')
@@ -137,6 +135,6 @@ function update(){
         y_axis = d3.axisLeft().scale(yscale)
         svg.append("g").call(y_axis)
 
-    });
+        });
 }
 update()
