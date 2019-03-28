@@ -5,8 +5,17 @@ var svg = d3.select("#scatterVis")
     .append("svg")
         .attr('width', width)
         .attr('height', height)
-    .append('g')
-        .attr('transform', 'translate(' + margin.left + ',' + margin.top+')');
+        .append('g')
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top+')')
+        .attr('id', 'plotArea')
+var plotArea= d3.select("#plotArea")
+plotArea.append('g')
+    .attr('id', 'legendArea')
+plotArea.append('g')
+    .attr('id', 'yearDisplayArea')
+    .attr('transform','translate(550,640)')
+    .append("text")
+    .attr('id', 'yearDisplayText')
 
 var colourPalette = ['#66c2a5','#fc8d62','#8da0cb','#e78ac3','#a6d854','#ffd92f','#e5c494']
 var areaColours = {
@@ -31,34 +40,35 @@ let csvData = d3.csv('/finalData/LE_Scatter.csv');
 function update(){
     
     csvData.then(function(data){
+
         //add legend
         var offset = 15
         var legend1 = svg.selectAll('.legend1')
-            .data(Object.keys(areaColours))
-            .enter().append('g')
-            .attr("class", "legend1")
-            .attr("transform", function(d,i){
-                return "translate(10," + i*offset+")"
+        .data(Object.keys(areaColours))
+        .enter().append('g')
+        .attr("class", "legend1")
+        .attr("transform", function(d,i){
+            return "translate(10," + i*offset+")"
+        })
+        .on("mouseover", function(d){
+            svg.selectAll(".dot").filter(function(d2){
+                return d === d2.Region
             })
-            .on("mouseover", function(d){
-                svg.selectAll(".dot").filter(function(d2){
-                    return d === d2.Region
+                .attr('r', function(){
+                    return (Number(d3.select(this).attr('r')) + 2)
                 })
-                    .attr('r', function(){
-                        return (Number(d3.select(this).attr('r')) + 2)
-                    })
-                svg.selectAll(".dot").filter(function(d2){
-                    return d != d2.Region
-                })
-                    .style('opacity','0.2')
+            svg.selectAll(".dot").filter(function(d2){
+                return d != d2.Region
             })
-            .on("mouseout", function(d){
-                svg.selectAll(".dot")
-                    .attr("r", function(dd){ 
-                        return popscale(dd.pop_value
-                            );})
-                    .style('opacity','0.6')
-            })
+                .style('opacity','0.2')
+        })
+        .on("mouseout", function(d){
+            svg.selectAll(".dot")
+                .attr("r", function(dd){ 
+                    return popscale(dd.pop_value
+                        );})
+                .style('opacity','0.6')
+        })
             
         legend1.append('rect')
             .attr("width", 14)
@@ -72,13 +82,17 @@ function update(){
             .attr("y",13)
             .text(function(d){return d})
 
+        //Add year display
+        var yearSlider = document.getElementById("yearSlider")
+        var yearDisplay = svg.select("#yearDisplayText")
+            .text((yearSlider.value == 2015 ? 2017 : yearSlider.value))
+
         var dots = svg.selectAll(".dot")
             .data(data.filter(function(d){
-                var yearSlider = document.getElementById("yearSlider")
                 return d.Year == (yearSlider.value == 2015 ? 2017 : yearSlider.value)  && d.GDP_value > 0 && d.pop_value > 0
                 
             }))
-
+            
         dots
             .exit()
             .attr('cy', height)
