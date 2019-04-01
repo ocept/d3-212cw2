@@ -44,31 +44,30 @@ function update(){
         //add legend
         var offset = 15
         var legend1 = svg.selectAll('.legend1')
-        .data(Object.keys(areaColours))
-        .enter().append('g')
-        .attr("class", "legend1")
-        .attr("transform", function(d,i){
-            return "translate(10," + i*offset+")"
-        })
-        .on("mouseover", function(d){
-            svg.selectAll(".dot").filter(function(d2){
-                return d === d2.Region
+            .data(Object.keys(areaColours))
+            .enter().append('g')
+            .attr("class", "legend1")
+            .attr("transform", function(d,i){
+                return "translate(10," + i*offset+")"
             })
-                .attr('r', function(){
-                    return (Number(d3.select(this).attr('r')) + 2)
-                })
-            svg.selectAll(".dot").filter(function(d2){
-                return d != d2.Region
+            .on("mouseover", function(d){
+                svg.selectAll(".dot")
+                    .filter(function(d2){
+                        return d === d2.Region
+                    })
+                    .attr('r', function(){
+                        return (Number(d3.select(this).attr('r')) + 2)
+                    })
+                svg.selectAll(".dot").filter(function(d2){
+                    return d != d2.Region
+                    })
+                    .style('opacity','0.2')
             })
-                .style('opacity','0.2')
-        })
-        .on("mouseout", function(d){
-            svg.selectAll(".dot")
-                .attr("r", function(dd){ 
-                    return popscale(dd.pop_value
-                        );})
-                .style('opacity','0.6')
-        })
+            .on("mouseout", function(d){
+                svg.selectAll(".dot")
+                    .attr("r", d => popscale(d.pop_value))
+                    .style('opacity','0.6')
+            })
             
         legend1.append('rect')
             .attr("width", 14)
@@ -122,11 +121,14 @@ function update(){
 
         new_dots.merge(dots)
             .on('mouseover', function(d){
+                //show tooltip
                 ttip.html(d.Location)
-                .style("opacity",1)
-                .style("left",d3.event.pageX + 10 + "px")
-                .style("top", d3.event.pageY + "px")
-                .style("background", areaColours[d.Region])
+                    .style("opacity",1)
+                    .style("left",d3.event.pageX + 10 + "px")
+                    .style("top", d3.event.pageY + "px")
+                    .style("background", areaColours[d.Region])
+
+
             })
             .on("mouseout", function(d){
                 ttip.style("opacity",0)
