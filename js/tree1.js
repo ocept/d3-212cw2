@@ -18,31 +18,42 @@ function drawTree(){
             .key(function(d) { return d.cause_name})
             .rollup(function(d){ return d3.sum(d, function(d) { return d.GBD_val})})
             .entries(data)
-        
-        var hroot = d3.hierarchy(treeData[2], function(d) { return d.values})
-            .sum(function(d){return d.value})
 
-        var treeLayout = d3.treemap()
-            .size([width, height])
-            .padding(1)
-        treeLayout(hroot)
+        //draw all the treemaps
+        for(i = 0; i <7; i++){
+            var hroot = d3.hierarchy(treeData[i], function(d) { return d.values})
+                .sum(function(d){return d.value})
 
-        console.log(hroot.descendants())
-        var svg = d3.select("#treeVis")
-            .append("svg")
-            .attr("width", width)
-            .attr("height", height)
-            .selectAll("tree")
-            .data(hroot.leaves())
-            .enter()
-            .append("rect")
-            .attr("x", function(d) { return d.x0})
-            .attr("y", function(d) { return d.y0})
-            .attr("width", function(d){ return d.x1 - d.x0})
-            .attr("height", function(d) {return d.y1 - d.y0})
-            .attr("text", function(d){ return d.data.key})
-            .attr("fill", function(d){ return colourKey[d.parent.data.key]})
+            var treeLayout = d3.treemap()
+                .size([width, height])
+                .padding(1)
+            treeLayout(hroot)
 
+            //console.log(hroot.descendants())
+            var tree = d3.select("#treeVis")
+                .append("g")
+            
+            console.log(hroot)
+            tree.append("div")    
+                .text(hroot.data.key)
+            tree.append("svg")
+                    .attr("width", width)
+                    .attr("height", height)
+                .selectAll("tree")
+                    .data(hroot.leaves())
+                    //.append("text")
+                    //.attr("text", d => d.data.key)
+                    .enter()
+                .append("rect")
+                    .attr("x", function(d) { return d.x0})
+                    .attr("y", function(d) { return d.y0})
+                    .attr("width", function(d){ return d.x1 - d.x0})
+                    .attr("height", function(d) {return d.y1 - d.y0})
+                    .attr("text", function(d){ return d.data.key})
+                    .attr("fill", function(d){ return colourKey[d.parent.data.key]})
+                 
+
+        }
     })
 
 
