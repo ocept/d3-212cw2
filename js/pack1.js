@@ -46,13 +46,11 @@ function tree2Update(){
 
         var treeLayout = d3.pack()
             .size([t2Width, t2Height])
-            // .padding(1)
         treeLayout(hroot)
 
         var nodes = t2Svg.selectAll(".treeNode")
                 .data(hroot.descendants())
 
-        console.log(nodes)
         var new_nodes = nodes.enter()
                 .append("g")
                 .attr("class", "treeNode")
@@ -64,7 +62,7 @@ function tree2Update(){
         new_nodes.merge(nodes)
             .select("circle")
             .on("mouseover", function(d){
-                t2TTip.html(d.data.key)
+                t2TTip.html(d.data.key + "<BR>" + Math.round(d.value))
                     .style("opacity", 1)
                     .style("left", d3.event.pageX + 10 +"px")
                     .style("top", d3.event.pageY + "px")
@@ -78,12 +76,9 @@ function tree2Update(){
             .attr("cx", d => d.x)
             .attr("cy", d => d.y)
             .attr("fill", function(d){ 
-                console.log(d);
                 if(d.depth === 2){ return colourKey[d.parent.data.key]}
                 else {return colourKey[d.data.key]}
             })
-            // .attr("class", d => d.parent.data.key)
-                 
 
         
     })
