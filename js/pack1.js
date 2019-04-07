@@ -72,15 +72,14 @@ function tree2Update(){
             .on("mouseout", function(d){
                 t2TTip.style("opacity", 0)
             })
+            .style("opacity", d => d.depth*0.5)
             .transition(t)
-            .style("opacity", 0.6)
             .attr("r", d => d.r)
             .attr("cx", d => d.x)
             .attr("cy", d => d.y)
             .attr("fill", function(d){ 
                 console.log(d);
-                if(d.depth === 0) {return "#ffffff"}
-                else if(d.depth === 2){ return colourKey[d.parent.data.key]}
+                if(d.depth === 2){ return colourKey[d.parent.data.key]}
                 else {return colourKey[d.data.key]}
             })
             // .attr("class", d => d.parent.data.key)
