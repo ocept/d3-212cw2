@@ -13,7 +13,7 @@ var t2TTip = tree.append("div")
     .style("opacity", 0)
 
 function tree2Update(){
-    
+
     var colourKey = {"Injuries": "#66c2a5",
         "Non-communicable diseases": "#fc8d62",
         "Communicable, maternal, neonatal, and nutritional diseases":"#8da0cb"}
@@ -25,8 +25,13 @@ function tree2Update(){
         data.forEach(function(d) {
             d.GBD_val = +d.GBD_val
         })
+        var regionSortOrder = ["World Bank Low Income", "World Bank Lower Middle Income" , "World Bank Upper Middle Income" , "World Bank High Income"]
         treeData = d3.nest()
             .key(function(d){ return d.location_name})
+                .sortKeys(function(d, i ){ 
+                    console.log(d + "," + i)
+                    return regionSortOrder.indexOf(d) - regionSortOrder.indexOf(i)
+                })
             .key(function(d) { return d.Lvl1_category})
             .key(function(d) { return d.cause_name})
             .rollup(function(d){ return d3.sum(d, function(d) { return d.GBD_val})})
@@ -50,16 +55,27 @@ function tree2Update(){
 
         console.log(nodes)
         var new_nodes = nodes.enter()
-                .append("rect")
+                .append("g")
                 .attr("class", "treeNode")
+        new_nodes.append("text")
+        new_nodes.append("rect")
+                
         
         // new_nodes.append("text")
             // .html(d => d.data.key)
 
         nodes.exit()
             .remove()
-                
+             
         new_nodes.merge(nodes)
+            .transition(t)
+            .attr("transform", function(d) { return "translate(" + d.x0 +","+ d.y0 +")"})
+
+        new_nodes.merge(nodes)
+            .select("text")
+            .text(d => d.data.key)
+        new_nodes.merge(nodes)
+            .select("rect")
             .on("mouseover", function(d){
                 t2TTip.html(d.data.key)
                     .style("opacity", 1)
@@ -70,8 +86,6 @@ function tree2Update(){
                 t2TTip.style("opacity", 0)
             })
             .transition(t)
-            .attr("x", function(d) { return d.x0})
-            .attr("y", function(d) { return d.y0})
             .attr("width", function(d){ return d.x1 - d.x0})
             .attr("height", function(d) {return d.y1 - d.y0})
             .attr("text", function(d){ return d.data.key})
