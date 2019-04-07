@@ -39,6 +39,10 @@ div.tooltip {
 .scatterVis{
     margin:auto;
 }
+.nodeLabel{
+    font: 10px sans-serif; 
+    fill: white;   
+}
 #yearDisplayText{
     font: 128px sans-serif;
     opacity: 0.2;

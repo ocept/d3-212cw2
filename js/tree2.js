@@ -41,14 +41,13 @@ function tree2Update(){
         var hroot = d3.hierarchy(treeData[selectedTree], function(d) { return d.values})
             .sum(function(d){return d.value})
 
+        tree.select("#treeLabel")
+            .text(hroot.data.key)
+
         var treeLayout = d3.treemap()
             .size([t2Width, t2Height])
             .padding(1)
         treeLayout(hroot)
-        
-        console.log(hroot)
-        tree.select("#treeLabel")
-           .text(hroot.data.key)
 
         var nodes = t2Svg.selectAll(".treeNode")
                 .data(hroot.leaves())
@@ -57,12 +56,8 @@ function tree2Update(){
         var new_nodes = nodes.enter()
                 .append("g")
                 .attr("class", "treeNode")
-        new_nodes.append("text")
         new_nodes.append("rect")
-                
-        
-        // new_nodes.append("text")
-            // .html(d => d.data.key)
+        new_nodes.append("text")
 
         nodes.exit()
             .remove()
@@ -73,7 +68,11 @@ function tree2Update(){
 
         new_nodes.merge(nodes)
             .select("text")
+            .attr("dx", 2)
+            .attr("dy", 13)
+            .attr("class", "nodeLabel")
             .text(d => d.data.key)
+
         new_nodes.merge(nodes)
             .select("rect")
             .on("mouseover", function(d){
@@ -88,7 +87,6 @@ function tree2Update(){
             .transition(t)
             .attr("width", function(d){ return d.x1 - d.x0})
             .attr("height", function(d) {return d.y1 - d.y0})
-            .attr("text", function(d){ return d.data.key})
             .attr("fill", function(d){ return colourKey[d.parent.data.key]})
             
                  
