@@ -37,7 +37,7 @@ var t = d3.transition()
     .duration(100)
     
 let csvData = d3.csv('/finalData/LE_Scatter.csv');
-function update(){
+function scatterUpdate(){
     
     csvData.then(function(data){
 
@@ -152,4 +152,33 @@ function update(){
 
         });
 }
-update()
+var scTimer
+var scPlaying = false
+function scatterPlay()
+{
+    var playScatter = document.getElementById("playScatter")
+    if(scPlaying){
+        scPlaying = false
+        playScatter.innerHTML = "Play"
+        clearInterval(scTimer)
+    }
+    else{
+        scPlaying = true
+        playScatter.innerHTML = "Pause"
+        scTimer = setInterval(scatterStep, 600)
+    }
+}
+function scatterStep()
+{
+    var yearSlider = document.getElementById("yearSlider")
+    yearSlider.valueAsNumber += 5
+    if(yearSlider.valueAsNumber === 2015)
+    {
+        scPlaying = false
+        playScatter.innerHTML = "Play"
+        clearInterval(scTimer)
+    }
+    yearDisplay.innerHTML= yearSlider.value == 2015 ? 2017 : yearSlider.value
+    scatterUpdate()
+}
+scatterUpdate()

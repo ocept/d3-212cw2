@@ -8,8 +8,9 @@
 </head>
 <body>
     <div class="slidercontainer">
+        <button id = "playScatter">Play</button><span id="yearDisplay">1960</span>
         <input type="range" min="1960" max="2015" value="1960" step="5" class="slider" id="yearSlider"> 
-        <span id="yearDisplay">1960</span>
+
     </div>
     <div id="scatterVis">
     </div>
@@ -21,8 +22,10 @@
     yearSlider.oninput = function()
     {
         yearDisplay.innerHTML= this.value == 2015 ? 2017 : this.value
-        update();
+        scatterUpdate();
     }
+    var playScatter = document.getElementById("playScatter")
+    playScatter.onclick = function(){ scatterPlay() }
 
     </script>
 
