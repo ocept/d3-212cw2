@@ -14,7 +14,11 @@
     </div>
     <div id="scatterVis">
     </div>
-    
+    <div class="slidercontainer">
+        <input type="range" min="0" max="3" value="0" step="1" class="slider" id="incomeSlider"> 
+    </div>
+    <div id="treeVis">
+    </div>
     <script>
     //update slider value
     var yearSlider = document.getElementById("yearSlider")
@@ -27,8 +31,16 @@
     var playScatter = document.getElementById("playScatter")
     playScatter.onclick = function(){ scatterPlay() }
 
+    var incomeSlider = document.getElementById("incomeSlider")
+    incomeSlider.oninput = function(){
+
+        tree2Update();
+    }
+
     </script>
 
-    <script src="/js/scatter1.js", charset="utf-8"></script>
+    <!-- <script src="/js/scatter1.js", charset="utf-8"></script> -->
+    <!-- <script src="/js/tree2.js", charset="utf-8"></script> -->
+    <script src = "/js/pack1.js", charset="utf-8"></script>
 </body>
 </html>
