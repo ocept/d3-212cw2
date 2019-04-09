@@ -1,6 +1,6 @@
 var width = 900;
 var height = 700;
-var margin = {top: 20, bottom:20, left:20, right:60}
+var margin = {top: 20, bottom:30, left:35, right:60}
 var svg = d3.select("#scatterVis")
     .append("svg")
         .attr('width', width)
@@ -150,6 +150,17 @@ function scatterUpdate(){
         y_axis = d3.axisLeft().scale(yscale)
         svg.append("g").call(y_axis)
 
+        //add axis labels
+        svg.append("text")
+            .attr("transform", "translate("+ width/2 + "," + (height + margin.bottom - 5) + ")")
+            .text("GDP Per Capita")
+            .attr("class", "axisLabel")
+        svg.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("x", -height/2)
+            .attr("y", -25)
+            .attr("class", "axisLabel")
+            .text("Life expectancy (years)")
         });
 }
 var scTimer
