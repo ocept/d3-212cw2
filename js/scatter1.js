@@ -150,19 +150,22 @@ function scatterUpdate(){
         y_axis = d3.axisLeft().scale(yscale)
         svg.append("g").call(y_axis)
 
-        //add axis labels
-        svg.append("text")
-            .attr("transform", "translate("+ width/2 + "," + (height + margin.bottom - 5) + ")")
-            .text("GDP Per Capita")
-            .attr("class", "axisLabel")
-        svg.append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("x", -height/2)
-            .attr("y", -25)
-            .attr("class", "axisLabel")
-            .text("Life expectancy (years)")
+
         });
 }
+
+//add axis labels
+svg.append("text")
+    .attr("transform", "translate("+ width/2 + "," + (height + margin.bottom - 5) + ")")
+    .text("GDP Per Capita")
+    .attr("class", "axisLabel")
+svg.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("x", -height/2)
+    .attr("y", -25)
+    .attr("class", "axisLabel")
+    .text("Life expectancy (years)")
+
 var scTimer
 var scPlaying = false
 function scatterPlay()
