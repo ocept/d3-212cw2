@@ -43,10 +43,10 @@ function update(){
 
         //add legend
         var offset = 15
-        var legend1 = svg.selectAll('.legend1')
+        var legend1 = svg.selectAll('.legend')
         .data(Object.keys(areaColours))
         .enter().append('g')
-        .attr("class", "legend1")
+        .attr("class", "legend")
         .attr("transform", function(d,i){
             return "translate(10," + i*offset+")"
         })

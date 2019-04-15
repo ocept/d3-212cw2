@@ -20,6 +20,29 @@ function tree2Update(){
     var t = d3.transition()
         .duration(800)
 
+    //add legend
+    var legendEntries = ["Injuries",
+    "Non-communicable diseases",
+    "Communicable, maternal, neonatal, and nutritional diseases"]
+    var offset = 15;
+    var legend = t2Svg.selectAll(".legend")
+        .data(legendEntries)
+        .enter()
+        .append("g")
+        .attr("class", "legend")
+        .attr("transform", function(d,i){
+            return "translate(10," + i*offset+")"
+        })
+
+    legend.append('rect')
+        .attr('width','14')
+        .attr('height','14')
+        .style('fill', d => colourKey[d])
+
+    legend.append('text')
+        .attr("x",20)
+        .attr("y",13)
+        .text(function(d){return d})
 
     rawData.then(function(data){
         data.forEach(function(d) {
@@ -29,7 +52,6 @@ function tree2Update(){
         treeData = d3.nest()
             .key(function(d){ return d.location_name})
                 .sortKeys(function(d, i ){ 
-                    console.log(d + "," + i)
                     return regionSortOrder.indexOf(d) - regionSortOrder.indexOf(i)
                 })
             .key(function(d) { return d.Lvl1_category})
@@ -79,8 +101,6 @@ function tree2Update(){
                 if(d.depth === 2){ return colourKey[d.parent.data.key]}
                 else {return colourKey[d.data.key]}
             })
-
-        
     })
 }
 tree2Update();
