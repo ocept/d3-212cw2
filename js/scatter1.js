@@ -178,6 +178,14 @@ function scatterPlay()
         clearInterval(scTimer)
     }
     else{
+        var yearSlider = document.getElementById("yearSlider")
+        if(yearSlider.valueAsNumber === 2015) //wrap around when playing from end
+        {
+            yearSlider.valueAsNumber = 1960
+            yearDisplay.innerHTML = 1960
+            svg.select("#yearDisplayText")
+                .text(1960)
+        }
         scPlaying = true
         playScatter.innerHTML = "Pause"
         scTimer = setInterval(scatterStep, 600)
