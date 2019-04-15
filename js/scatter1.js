@@ -54,23 +54,20 @@ function scatterUpdate(){
             svg.selectAll(".dot").filter(function(d2){
                 return d === d2.Region
             })
-            .on("mouseover", function(d){
-                svg.selectAll(".dot")
-                    .filter(dd => d === dd.Region)
-                    .attr('r', function(){
-                        return (Number(d3.select(this).attr('r')) + 2)
-                    })
-                svg.selectAll(".dot").filter(dd => d != dd.Region)
-                    .style('opacity','0.2')
-                svg.selectAll('.legend1').filter(dd => d != dd)
-                    .style('opacity','0.2')
+                .attr('r', function(){
+                    return (Number(d3.select(this).attr('r')) + 2)
+                })
+            svg.selectAll(".dot").filter(dd => d != dd.Region)
+                .style('opacity','0.2')
+            svg.selectAll('.legend').filter(dd => d != dd)
+                .style('opacity','0.2')
             })
-            .on("mouseout", function(d){
-                svg.selectAll(".dot")
-                    .attr("r", d => popscale(d.pop_value))
-                    .style('opacity','0.6')
-                legend1.style('opacity', 1)
-            })
+        .on("mouseout", function(d){
+            svg.selectAll(".dot")
+                .attr("r", d => popscale(d.pop_value))
+                .style('opacity','0.6')
+            legend1.style('opacity', 1)
+        })
             
         legend1.append('rect')
             .attr("width", 14)
