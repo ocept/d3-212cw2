@@ -43,12 +43,16 @@ function scatterUpdate(){
 
         //add legend
         var offset = 15
-        var legend1 = svg.selectAll('.legend1')
-            .data(Object.keys(areaColours))
-            .enter().append('g')
-            .attr("class", "legend1")
-            .attr("transform", function(d,i){
-                return "translate(10," + i*offset+")"
+        var legend1 = svg.selectAll('.legend')
+        .data(Object.keys(areaColours))
+        .enter().append('g')
+        .attr("class", "legend")
+        .attr("transform", function(d,i){
+            return "translate(10," + i*offset+")"
+        })
+        .on("mouseover", function(d){
+            svg.selectAll(".dot").filter(function(d2){
+                return d === d2.Region
             })
             .on("mouseover", function(d){
                 svg.selectAll(".dot")
