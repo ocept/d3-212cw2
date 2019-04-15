@@ -1,6 +1,6 @@
 var t2Width = 500
 let t2Height = 500
-var rawData = d3.csv('/finalData/tree2.csv')
+var rawData = d3.csv('/finalData/tree3.csv')
 var tree = d3.select("#treeVis")
     .append("g")
 tree.append("div")
@@ -66,8 +66,9 @@ function tree2Update(){
         tree.select("#treeLabel")
             .text(hroot.data.key)
 
+        var scaleFactor = Math.sqrt(hroot.value / 38331)
         var treeLayout = d3.pack()
-            .size([t2Width, t2Height])
+            .size([t2Width*scaleFactor, t2Height*scaleFactor])
         treeLayout(hroot)
 
         var nodes = t2Svg.selectAll(".treeNode")
@@ -101,6 +102,7 @@ function tree2Update(){
                 if(d.depth === 2){ return colourKey[d.parent.data.key]}
                 else {return colourKey[d.data.key]}
             })
+        // nodes.each(d => console.log(document.getElementById("treeLabel").innerHTML,",",d.value,",", d.r))
     })
 }
 tree2Update();

@@ -147,9 +147,11 @@ function scatterUpdate(){
             .attr('class','x_axis');
 
         svg.select('.x_axis').call(x_axis);
-
         y_axis = d3.axisLeft().scale(yscale)
-        svg.append("g").call(y_axis)
+        svg.append("g")
+            .attr('class', 'y_axis')
+        
+        svg.select('.y_axis').call(y_axis)
 
 
         });
