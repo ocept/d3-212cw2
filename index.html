@@ -10,14 +10,16 @@
     <div class="slidercontainer">
         <button id = "playScatter">Play</button><span id="yearDisplay">1960</span>
         <input type="range" min="1960" max="2015" value="1960" step="5" class="slider" id="yearSlider"> 
-
     </div>
+
     <div id="scatterVis">
     </div><br>
-
+    
     <div id="treeVis">
             <input type="range" min="0" max="3" value="0" step="1" class="slider" id="incomeSlider"> 
     </div>
+
+    <div id="linesVis"></div>
     <script>
     //update slider value
     var yearSlider = document.getElementById("yearSlider")
@@ -38,8 +40,9 @@
 
     </script>
 
-    <script src="/js/scatter1.js", charset="utf-8"></script>
+    <!-- <script src="/js/scatter1.js", charset="utf-8"></script> -->
     <!-- <script src="/js/tree2.js", charset="utf-8"></script> -->
-    <script src = "/js/pack1.js", charset="utf-8"></script>
+    <!-- <script src = "/js/pack1.js", charset="utf-8"></script> -->
+    <script src = "/js/causeLines1.js", charset="utf-8"></script>
 </body>
 </html>
