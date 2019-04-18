@@ -43,6 +43,8 @@ var wbAreaColours = {
 }
 
 function line1Update(){
+    var t = d3.transition()
+        .duration(200)
     var line = d3.line()
         .x(d => xscale(d[0]))
         .y(d => yscale(d[1]))
@@ -82,6 +84,7 @@ function line1Update(){
             
         l1svg.selectAll(".line")
             .data(causeData)
+            .transition(t)
             .attr("d", function(d,i){
                 linepath = []
                 for(i = 0; i < d.values.length; i++)
@@ -104,7 +107,9 @@ function line1Update(){
         l1svg.append("g")
             .attr('class', 'y_axis')
         
-        l1svg.select('.y_axis').call(y_axis)
+        l1svg.select('.y_axis')
+            .transition(t)
+            .call(y_axis)
     
     })
 }line1Update()
