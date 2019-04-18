@@ -1,6 +1,6 @@
 var l1width = 500;
 var l1height = 500;
-var margin = {top: 20, bottom:20, left:20, right:20}
+var l1margin = {top: 20, bottom:20, left:40, right:20}
 var allCauses = ['Cardiovascular diseases', 'Chronic respiratory diseases',
 'Diabetes and kidney diseases', 'Digestive diseases',
 'Enteric infections',
@@ -29,8 +29,11 @@ var l1svg = d3.select("#linesVis")
     .append("svg")
         .attr('width', l1width)
         .attr('height', l1height)
-        .attr('transform', 'translate(' + margin.left + ',' + margin.top+')')
+    .append("g")
+        .attr('transform', 'translate(' + l1margin.left + ',' + l1margin.top+')')
 
+l1width = l1width - l1margin.left - l1margin.right;
+l1height = l1height - l1margin.top - l1margin.bottom;
 var fourColourPallet = ['#e66101','#fdb863','#b2abd2','#5e3c99']
 var wbAreaColours = {
     "World Bank High Income" : fourColourPallet[0],
@@ -39,13 +42,15 @@ var wbAreaColours = {
     "World Bank Low Income" : fourColourPallet[3]
 }
 
-var xscale = d3.scaleLinear()
-    .range([0, l1width])
-var yscale = d3.scaleLinear()
-    .range([l1height, 0])
+function line1Update(){
+    var line = d3.line()
+        .x(d => xscale(d[0]))
+        .y(d => yscale(d[1]))
+    var xscale = d3.scaleLinear()
+        .range([0, l1width])
+    var yscale = d3.scaleLinear()
+        .range([l1height, 0])
 
-
-function line1Update(){   
     console.log(selectCause.property("value"))
     var selectedCause = selectCause.property("value")
     var l1data = d3.csv("/finalData/causeLines1.csv")
@@ -56,12 +61,8 @@ function line1Update(){
             d.GBD_val = +d.GBD_val
         })
         xscale.domain(d3.extent(causeData, d => d.year))
-        yscale.domain(d3.extent(causeData, d => d.GBD_val))
-        console.log(yscale.domain())
-        var line = d3.line()
-            .x(d => xscale(d[0]))
-            .y(d => yscale(d[1]))
-        // console.log(yscale.domain())
+        yscale.domain([0 , d3.max(causeData, d => d.GBD_val)])
+
         //group data by location
         causeData = d3.nest()
             .key(d => d.location_name)
@@ -89,6 +90,21 @@ function line1Update(){
                 }
                 return line(linepath)
             })
+        
+        x_axis = d3.axisBottom()
+            .scale(xscale)
+            .ticks(4,".4r")
+            // .tickFormat(d3.format(".4r"))
+        l1svg.append("g")
+            .attr("transform", "translate(0,"+l1height+")")
+            .attr('class','x_axis');
+        l1svg.select('.x_axis').call(x_axis);
 
+        y_axis = d3.axisLeft().scale(yscale)
+        l1svg.append("g")
+            .attr('class', 'y_axis')
+        
+        l1svg.select('.y_axis').call(y_axis)
+    
     })
 }line1Update()
