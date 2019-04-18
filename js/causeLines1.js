@@ -1,5 +1,6 @@
 var l1width = 500;
 var l1height = 500;
+var margin = {top: 20, bottom:20, left:20, right:20}
 var allCauses = ['Cardiovascular diseases', 'Chronic respiratory diseases',
 'Diabetes and kidney diseases', 'Digestive diseases',
 'Enteric infections',
@@ -28,10 +29,7 @@ var l1svg = d3.select("#linesVis")
     .append("svg")
         .attr('width', l1width)
         .attr('height', l1height)
-
-var line = d3.line()
-    .x(d => xscale(d[0]))
-    .y(d => yscale(d[1]))
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top+')')
 
 var fourColourPallet = ['#e66101','#fdb863','#b2abd2','#5e3c99']
 var wbAreaColours = {
@@ -60,12 +58,16 @@ function line1Update(){
         xscale.domain(d3.extent(causeData, d => d.year))
         yscale.domain(d3.extent(causeData, d => d.GBD_val))
         console.log(yscale.domain())
+        var line = d3.line()
+            .x(d => xscale(d[0]))
+            .y(d => yscale(d[1]))
+        // console.log(yscale.domain())
         //group data by location
         causeData = d3.nest()
             .key(d => d.location_name)
             .entries(causeData)
             
-        console.log(causeData)
+        // console.log(causeData)
         plot = l1svg.selectAll(".plot")
             .data(causeData)
             .enter()
@@ -76,8 +78,9 @@ function line1Update(){
             .attr("fill", "none")
             .attr("stroke", d => wbAreaColours[d.key])
             .attr("stroke-width", "2px")
-        
+            
         l1svg.selectAll(".line")
+            .data(causeData)
             .attr("d", function(d,i){
                 linepath = []
                 for(i = 0; i < d.values.length; i++)
@@ -86,7 +89,6 @@ function line1Update(){
                 }
                 return line(linepath)
             })
-
 
     })
 }line1Update()
