@@ -78,7 +78,9 @@ function linesUpdate(){
             d.GBD_val = +d.GBD_val
         })
         xscale.domain(d3.extent(causeData, d => d.year))
-        yscale.domain([0 , d3.max(causeData, d => d.GBD_val)])
+        l1Max = d3.max(causeData, d => d.GBD_val)
+        l2Max = d3.max(l2causeData, d => d.GBD_val)
+        yscale.domain([0 , d3.max([l1Max, l2Max])])
 
         //group data by location
         causeData = d3.nest()
