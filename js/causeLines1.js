@@ -15,9 +15,10 @@ var allCauses = ['Cardiovascular diseases', 'Chronic respiratory diseases',
 'Skin and subcutaneous diseases', 'Substance use disorders',
 'Transport injuries', 'Unintentional injuries']
 
-var selectCause = d3.select("#linesVis")
-    .append("select")
-    .attr("onchange", "line1Update()")
+// var selectCause = d3.select("#linesVis")
+//     .append("select")
+//     .attr("onchange", "line1Update()")
+selectCause = d3.select("#selectCause")
 selectCause.selectAll("option")
     .data(allCauses)
     .enter()
@@ -25,7 +26,13 @@ selectCause.selectAll("option")
         .text(d => d)
 
 var l1svg = d3.select("#linesVis")
-    .append("div")    
+    .append("svg")
+        .attr('width', l1width)
+        .attr('height', l1height)
+    .append("g")
+        .attr('transform', 'translate(' + l1margin.left + ',' + l1margin.top+')')
+
+var l2svg = d3.select("#linesVis")
     .append("svg")
         .attr('width', l1width)
         .attr('height', l1height)
@@ -34,15 +41,15 @@ var l1svg = d3.select("#linesVis")
 
 l1width = l1width - l1margin.left - l1margin.right;
 l1height = l1height - l1margin.top - l1margin.bottom;
-var fourColourPallet = ['#e66101','#fdb863','#b2abd2','#5e3c99']
+var fourColourPallet = ['#d7191c','#fdae61','#a6d96a','#1a9641']
 var wbAreaColours = {
-    "World Bank High Income" : fourColourPallet[0],
-    "World Bank Upper Middle Income" : fourColourPallet[1],
-    "World Bank Lower Middle Income" : fourColourPallet[2],
-    "World Bank Low Income" : fourColourPallet[3]
+    "World Bank High Income" : fourColourPallet[3],
+    "World Bank Upper Middle Income" : fourColourPallet[2],
+    "World Bank Lower Middle Income" : fourColourPallet[1],
+    "World Bank Low Income" : fourColourPallet[0]
 }
 
-function line1Update(){
+function linesUpdate(){
     var t = d3.transition()
         .duration(200)
     var line = d3.line()
@@ -55,10 +62,18 @@ function line1Update(){
 
     console.log(selectCause.property("value"))
     var selectedCause = selectCause.property("value")
-    var l1data = d3.csv("/finalData/causeLines1.csv")
-    l1data.then(function(data) {
-        causeData = data.filter(d => d.cause_name == selectedCause)
+    Promise.all([
+        d3.csv("/finalData/causeLines1.csv"),
+        d3.csv("/finalData/causeLines2.csv")
+    ])
+    .then(function(data) {
+        causeData = data[0].filter(d => d.cause_name == selectedCause)
         causeData.forEach(function(d){
+            d.year = +d.year
+            d.GBD_val = +d.GBD_val
+        })
+        l2causeData = data[1].filter(d => d.cause_name == selectedCause)
+        l2causeData.forEach(function(d){
             d.year = +d.year
             d.GBD_val = +d.GBD_val
         })
@@ -70,7 +85,6 @@ function line1Update(){
             .key(d => d.location_name)
             .entries(causeData)
             
-        // console.log(causeData)
         plot = l1svg.selectAll(".plot")
             .data(causeData)
             .enter()
@@ -80,7 +94,7 @@ function line1Update(){
             .attr("class","line")
             .attr("fill", "none")
             .attr("stroke", d => wbAreaColours[d.key])
-            .attr("stroke-width", "2px")
+            .attr("stroke-width", "3px")
             
         l1svg.selectAll(".line")
             .data(causeData)
@@ -100,8 +114,8 @@ function line1Update(){
             // .tickFormat(d3.format(".4r"))
         l1svg.append("g")
             .attr("transform", "translate(0,"+l1height+")")
-            .attr('class','x_axis');
-        l1svg.select('.x_axis').call(x_axis);
+            .attr('class','x_axis')
+        l1svg.select('.x_axis').call(x_axis)
 
         y_axis = d3.axisLeft().scale(yscale)
         l1svg.append("g")
@@ -110,6 +124,48 @@ function line1Update(){
         l1svg.select('.y_axis')
             .transition(t)
             .call(y_axis)
-    
+
+
+        //draw right chart
+        l2causeData = d3.nest()
+            .key(d => d.location_name)
+            .entries(l2causeData)
+        
+        l2plot = l2svg.selectAll("plot")
+            .data(l2causeData)
+            .enter()
+            .append("g")
+            .attr("class", "plot")
+            .append("path")
+            .attr("class","line")
+            .attr("fill", "none")
+            .attr("stroke", d => areaColours[d.key])
+            .attr("stroke-width", "3px")
+
+        l2svg.selectAll(".line")
+            .data(l2causeData)
+            .transition(t)
+            .attr("d", function(d,i){
+                linepath = []
+                for(i =0; i < d.values.length; i++){
+                    linepath.push([d.values[i].year, d.values[i].GBD_val])
+                }
+                return line(linepath)
+            })
+        
+        l2svg.append("g")
+            .attr("transform", "translate(0," + l1height + ")")
+            .attr("class", "x_axis")
+        l2svg.select(".x_axis").call(x_axis)
+
+        l2svg.append("g")
+            .attr("class", "y_axis")
+        l2svg.select(".y_axis")
+            .transition(t)
+            .call(y_axis)
     })
-}line1Update()
+}linesUpdate()
+
+function line2Update(){
+
+}line2Update()
