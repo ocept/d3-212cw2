@@ -15,9 +15,6 @@ var allCauses = ['Cardiovascular diseases', 'Chronic respiratory diseases',
 'Skin and subcutaneous diseases', 'Substance use disorders',
 'Transport injuries', 'Unintentional injuries']
 
-// var selectCause = d3.select("#linesVis")
-//     .append("select")
-//     .attr("onchange", "line1Update()")
 selectCause = d3.select("#selectCause")
 selectCause.selectAll("option")
     .data(allCauses)
@@ -102,7 +99,7 @@ function linesUpdate(){
             .data(causeData)
             .transition(t)
             .attr("d", function(d,i){
-                linepath = []
+                var linepath = []
                 for(i = 0; i < d.values.length; i++)
                 {
                     linepath.push([d.values[i].year, d.values[i].GBD_val])
@@ -133,7 +130,7 @@ function linesUpdate(){
             .key(d => d.location_name)
             .entries(l2causeData)
         
-        l2plot = l2svg.selectAll("plot")
+        l2plot = l2svg.selectAll(".plot")
             .data(l2causeData)
             .enter()
             .append("g")
@@ -148,7 +145,7 @@ function linesUpdate(){
             .data(l2causeData)
             .transition(t)
             .attr("d", function(d,i){
-                linepath = []
+                var linepath = []
                 for(i =0; i < d.values.length; i++){
                     linepath.push([d.values[i].year, d.values[i].GBD_val])
                 }
@@ -167,7 +164,3 @@ function linesUpdate(){
             .call(y_axis)
     })
 }linesUpdate()
-
-function line2Update(){
-
-}line2Update()
