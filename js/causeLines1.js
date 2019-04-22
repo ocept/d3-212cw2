@@ -38,13 +38,6 @@ var l2svg = d3.select("#linesVis")
 
 l1width = l1width - l1margin.left - l1margin.right;
 l1height = l1height - l1margin.top - l1margin.bottom;
-var fourColourPallet = ['#d7191c','#fdae61','#a6d96a','#1a9641']
-var wbAreaColours = {
-    "World Bank High Income" : fourColourPallet[3],
-    "World Bank Upper Middle Income" : fourColourPallet[2],
-    "World Bank Lower Middle Income" : fourColourPallet[1],
-    "World Bank Low Income" : fourColourPallet[0]
-}
 
 function linesUpdate(){
     var t = d3.transition()
