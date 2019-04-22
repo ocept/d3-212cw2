@@ -58,3 +58,7 @@ div.tooltip {
 .axisLabel{
     font: 12px sans-serif;
 }
+.ageLabel{
+    font: 12px sans-serif;
+    text-anchor: middle;
+}
