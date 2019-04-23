@@ -24,35 +24,56 @@ function drawAgeVis(){
             .domain(d3.range(23)) //23 age categories
             .padding(0.05)
 
+        //RIGHT
         rightData = data.filter(d => d.location_name == "World Bank High Income")
         rightBars = svg.selectAll(".rightBar")
             .data(rightData)
             .enter()
-            .append("rect")
-                .attr("class","rightBar")
-                .attr("x",width/2 + centreWidth/2)
-                .attr("width", d => dieScale(d.percent_dying))
-                .attr("y", function(d,i){ 
-                    return ageScale(i)})
-                .attr("height", ageScale.bandwidth())
-                .attr("fill", wbAreaColours["World Bank High Income"])
-                .attr("opacity","0.8")
+            .append("g")
+                .attr("transform",function(d,i){
+                    return "translate(" + (width/2 + centreWidth/2) + "," + ageScale(i) +")"
+                })
+        rightBars.append("rect")
+            .attr("class","rightBar")
+            .attr("width", d => dieScale(d.percent_dying))
+            .attr("height", ageScale.bandwidth())
+            .attr("fill", wbAreaColours["World Bank High Income"])
+            .attr("opacity","0.8")
+        rightBars.append("text")
+            .text(d => ((d.percent_dying)*100).toPrecision(2))
+            .attr("class", function(d){
+                return ("barText"+d.age_group_name.replace(" ","_").replace(" ","_"))
+            })
+            .attr("y",18)
+            .attr("x", d => dieScale(d.percent_dying) + 10)
+            .attr("opacity",0)
 
+        //LEFT
         leftData = data.filter(d => d.location_name == "World Bank Low Income")
         leftBars = svg.selectAll(".leftBar")
             .data(leftData)
             .enter()
-            .append("rect")
-                .attr("class","leftBar")
-                .attr("x", function(d){
-                    return width/2 - centreWidth/2 - dieScale(d.percent_dying)
+            .append("g")
+                .attr("transform",function(d,i){
+                    return "translate(" + 
+                    (width/2 - centreWidth/2 - dieScale(d.percent_dying)) + 
+                    "," + ageScale(i) +")"
                 })
-                .attr("width", d => dieScale(d.percent_dying))
-                .attr("y", function(d,i){ 
-                    return ageScale(i)})
-                .attr("height", ageScale.bandwidth())
-                .attr("fill", wbAreaColours["World Bank Low Income"])
-                .attr("opacity","0.8")
+        leftBars.append("rect")
+            .attr("class","leftBar")
+            .attr("width", d => dieScale(d.percent_dying))
+            .attr("height", ageScale.bandwidth())
+            .attr("fill", wbAreaColours["World Bank Low Income"])
+            .attr("opacity","0.8")
+        leftBars.append("text")
+            .text(d => ((d.percent_dying)*100).toPrecision(2))
+            .attr("class", function(d){
+                return ("barText"+d.age_group_name.replace(" ","_").replace(" ","_"))
+            })
+            .attr("y",18)
+            .attr("x",-5)
+            .attr("style","text-anchor: end")
+            .attr("opacity",0)
 
         centreLabels = svg.selectAll(".ageLabel")
             .data(leftData)
@@ -90,6 +111,25 @@ function drawAgeVis(){
                 .attr("stroke", "black")
                 .attr("d", leftLine(leftLineData))
 
+        svg.selectAll(".mouseOverBox")
+            .data(leftData)
+            .enter()
+            .append("rect")
+                .attr("class","mouseOverBox")
+                .attr("opacity",0)
+                .attr("width",width)
+                .attr("height",ageScale.bandwidth())
+                .attr("y", function(d,i){ return ageScale(i)})
+                .on("mouseover", function(d){
+                    // console.log(d.age_group_name)
+                    svg.selectAll((".barText"+d.age_group_name.replace(" ","_").replace(" ","_")))
+                        .attr("opacity",1)
+                })
+                .on("mouseout", function(d){
+                    // console.log(d.age_group_name)
+                    svg.selectAll((".barText"+d.age_group_name.replace(" ","_").replace(" ","_")))
+                        .attr("opacity",0)
+                })
     })
 
 }drawAgeVis()
