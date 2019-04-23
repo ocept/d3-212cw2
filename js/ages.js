@@ -1,4 +1,4 @@
-function drawVis(){
+function drawAgeVis(){
     let width = 700
     let height = 700;
     let margin = {top: 20, bottom:20, left:20, right:20}
@@ -62,6 +62,34 @@ function drawVis(){
             .attr("x",width/2)
             .attr("y", function(d,i){return ageScale(i) + 18})
             .text(d => d.age_group_name)
+
+        var rightLine = d3.line()
+            .x(d => aliveScale(d[1]) + width/2 + centreWidth/2)
+            .y(d => ageScale(d[0]))
+        var leftLine = d3.line()
+            .x(d => width/2 - centreWidth/2 - aliveScale(d[1]))
+            .y(d => ageScale(d[0]))
+
+        rightLineData = rightData.map(function(d,i){
+                return [i, d.percent_alive]
+            })
+        svg.append("path")
+                .attr("class","rightLine")
+                .attr("fill", "none")
+                .attr("stroke-width", "2px")
+                .attr("stroke", "black")
+                .attr("d", rightLine(rightLineData))
+
+        leftLineData = leftData.map(function(d,i){
+            return [i, d.percent_alive]
+        })
+        svg.append("path")
+                .attr("class","leftLine")
+                .attr("fill", "none")
+                .attr("stroke-width", "2px")
+                .attr("stroke", "black")
+                .attr("d", leftLine(leftLineData))
+
     })
 
-}drawVis()
+}drawAgeVis()
