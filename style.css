@@ -31,6 +31,15 @@ div.tooltip {
     background: #30b030;
     cursor: pointer;
 }
+.slider::-moz-slider-thumb{
+    -moz-appearance: none; 
+    appearance: none;
+    width:38px;
+    height: 25px;
+    border-radius: 8px;
+    background: #30b030;
+    cursor: pointer;
+}
 .slidercontainer{
     width: 80%;
 }
@@ -61,4 +70,8 @@ div.tooltip {
 .ageLabel{
     font: 12px sans-serif;
     text-anchor: middle;
+}
+#ageVis{
+    position: sticky;
+    top: 0;
 }
