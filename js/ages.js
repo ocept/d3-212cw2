@@ -15,6 +15,10 @@ var ageSvg = d3.select("#ageVis")
 .append("svg")
     .attr("height", ageHeight)
     .attr("width", ageWidth)
+ageSvg.append("g").attr("id","bars")
+ageSvg.append("g").attr("id","lines")
+ageSvg.append("g").attr("id","centreLabels")
+ageSvg.append("g").attr("id","mouseBoxes")
 
 function drawAgeVis(scrollPos){
 
@@ -48,20 +52,21 @@ function drawAgeVis(scrollPos){
 
         //RIGHT BARS
         rightData = data.filter(d => d.location_name == "World Bank High Income")
-        rightBars = ageSvg.selectAll(".rightBar")
+        rightBars = ageSvg.select("#bars").selectAll(".rightBar")
             .data(rightData)
-            .enter()
+
+        newRightBars = rightBars.enter()
             .append("g")
                 .attr("transform",function(d,i){
                     return "translate(" + (ageWidth/2 + centreWidth/2) + "," + ageScale(i) +")"
                 })
-        rightBars.append("rect")
             .attr("class","rightBar")
+        newRightBars.append("rect")
             .attr("width", d => dieScale(d.percent_dying))
             .attr("height", ageScale.bandwidth())
             .attr("fill", wbAreaColours["World Bank High Income"])
             .attr("opacity","0.8")
-        rightBars.append("text")
+        newRightBars.append("text")
             .text(d => ((d.percent_dying)*100).toPrecision(2)+"%")
             .attr("class", function(d){
                 return ("barText"+d.ageCat)
@@ -71,24 +76,28 @@ function drawAgeVis(scrollPos){
             .attr("opacity",0)
             .attr("stroke", wbAreaColours["World Bank High Income"])
 
+        rightBars.exit()
+            .remove()
+
         //LEFT BARS
         leftData = data.filter(d => d.location_name == "World Bank Low Income")
-        leftBars = ageSvg.selectAll(".leftBar")
+        leftBars = ageSvg.select("#bars").selectAll(".leftBar")
             .data(leftData)
-            .enter()
+            
+        newLeftBars = leftBars.enter()
             .append("g")
                 .attr("transform",function(d,i){
                     return "translate(" + 
                     (ageWidth/2 - centreWidth/2 - dieScale(d.percent_dying)) + 
                     "," + ageScale(i) +")"
                 })
-        leftBars.append("rect")
             .attr("class","leftBar")
+        newLeftBars.append("rect")
             .attr("width", d => dieScale(d.percent_dying))
             .attr("height", ageScale.bandwidth())
             .attr("fill", wbAreaColours["World Bank Low Income"])
             .attr("opacity","0.8")
-        leftBars.append("text")
+        newLeftBars.append("text")
             .text(d => ((d.percent_dying)*100).toPrecision(2)+"%")
             .attr("class", function(d){
                 return ("barText"+d.ageCat)
@@ -98,51 +107,68 @@ function drawAgeVis(scrollPos){
             .attr("style","text-anchor: end")
             .attr("opacity",0)
             .attr("stroke", wbAreaColours["World Bank Low Income"])
-
-        centreLabels = ageSvg.selectAll(".ageLabel")
+        
+        leftBars.exit()
+            .remove()
+        
+        centreLabels = ageSvg.select("#centreLabels").selectAll(".ageLabel")
             .data(leftData)
-            .enter()
+        centreLabels.enter()
             .append("text")
             .attr("class","ageLabel")
             .attr("x",ageWidth/2)
             .attr("y", function(d,i){return ageScale(i) + 18})
             .text(d => d.age_group_name)
 
+        centreLabels.exit().remove()
+            
         //LINES
-        var rightLine = d3.line()
+        var rightLinePath = d3.line()
             .x(d => aliveScale(d[1]) + ageWidth/2 + centreWidth/2)
             .y(d => ageScale(d[0]))
-        var leftLine = d3.line()
+        var leftLinePath = d3.line()
             .x(d => ageWidth/2 - centreWidth/2 - aliveScale(d[1]))
             .y(d => ageScale(d[0]))
 
         rightLineData = rightData.map(function(d,i){
                 return [i, d.percent_alive]
             })
-        ageSvg.append("path")
+        rightLine = ageSvg.select("#lines").selectAll(".rightLine")
+            .data(rightLineData)
+        newRightLine = rightLine.enter()
+            .append("path")
                 .attr("class","rightLine")
                 .attr("fill", "none")
                 .attr("stroke-width", "2px")
                 .attr("stroke", "black")
-                .attr("d", rightLine(rightLineData))
+        newRightLine.merge(rightLine)
+            .attr("d", rightLinePath(rightLineData))
 
+        rightLine.exit().remove()
+        
         leftLineData = leftData.map(function(d,i){
             return [i, d.percent_alive]
         })
-        ageSvg.append("path")
+        leftLine = ageSvg.select("#lines").selectAll(".leftLine")
+            .data(leftLineData)
+        newLeftLine = leftLine.enter()
+            .append("path")
                 .attr("class","leftLine")
                 .attr("fill", "none")
                 .attr("stroke-width", "2px")
                 .attr("stroke", "black")
-                .attr("d", leftLine(leftLineData))
+        newLeftLine.merge(leftLine)
+            .attr("d", leftLinePath(leftLineData))
+        leftLine.exit().remove()
 
         //BOXES FOR MOUSE OVER
-        ageSvg.selectAll(".mouseOverBox")
+        ageSvg.select("#mouseBoxes").selectAll(".mouseOverBox")
             .data(leftData)
             .enter()
             .append("rect")
                 .attr("class","mouseOverBox")
                 .attr("opacity",0)
+                .style("z-index",99)
                 .attr("width",ageWidth)
                 .attr("height",ageScale.bandwidth())
                 .attr("y", function(d,i){ return ageScale(i)})
