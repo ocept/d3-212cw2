@@ -59,7 +59,7 @@ function drawAgeVis(scrollPos){
         //RIGHT BARS
         rightData = data.filter(d => d.location_name == "World Bank High Income")
         rightBars = ageSvg.select("#bars").selectAll(".rightBar")
-            .data(rightData)
+            .data(rightData.slice(0,rightData.length - 1))
 
         newRightBars = rightBars.enter()
             .append("g")
@@ -89,7 +89,7 @@ function drawAgeVis(scrollPos){
         //LEFT BARS
         leftData = data.filter(d => d.location_name == "World Bank Low Income")
         leftBars = ageSvg.select("#bars").selectAll(".leftBar")
-            .data(leftData)
+            .data(leftData.slice(0,leftData.length-1))
             
         newLeftBars = leftBars.enter()
             .append("g")
@@ -122,7 +122,7 @@ function drawAgeVis(scrollPos){
             .remove()
         
         centreLabels = ageSvg.select("#centreLabels").selectAll(".ageLabel")
-            .data(leftData)
+            .data(leftData.slice(0,leftData.length-1))
         centreLabels.enter()
             .append("text")
             .attr("class","ageLabel")
@@ -192,6 +192,7 @@ function drawAgeVis(scrollPos){
             .attr("cy",d=>ageScale(d[0]))
 
 
+
         //BOXES FOR MOUSE OVER
         ageSvg.select("#mouseBoxes").selectAll(".mouseOverBox")
             .data(leftData)
@@ -199,7 +200,6 @@ function drawAgeVis(scrollPos){
             .append("rect")
                 .attr("class","mouseOverBox")
                 .attr("opacity",0)
-                .style("z-index",99)
                 .attr("width",ageWidth)
                 .attr("height",ageScale.bandwidth())
                 .attr("y", function(d,i){ return ageScale(i)})
