@@ -14,13 +14,17 @@
 
     <div id="scatterVis">
     </div><br>
-    
     <div id="treeVis">
-            <input type="range" min="0" max="3" value="0" step="1" class="slider" id="incomeSlider"> 
+        <input type="range" min="0" max="3" value="0" step="1" class="slider" id="incomeSlider"> 
     </div>
+
     <select id = "selectCause" onchange="linesUpdate()"></select>
+    
     <div id="linesVis"></div>
-    <div id="ageVis"></div>
+    <div id="ageVis" style="height: 1000px";></div>
+    <div id="ageEnd" style="height: 1000px"></div>
+   
+   Test123
     <script>
     //update slider value
     var yearSlider = document.getElementById("yearSlider")
@@ -42,10 +46,10 @@
     </script>
 
     <script src="/js/common.js", charset="utf-8"></script>
-    <!-- <script src="/js/scatter1.js", charset="utf-8"></script> -->
+    <script src="/js/scatter1.js", charset="utf-8"></script>
     <!-- <script src="/js/tree2.js", charset="utf-8"></script> -->
-    <!-- <script src = "/js/pack1.js", charset="utf-8"></script> -->
-    <!-- <script src = "/js/causeLines1.js", charset="utf-8"></script> -->
+    <script src = "/js/pack1.js", charset="utf-8"></script>
+    <script src = "/js/causeLines1.js", charset="utf-8"></script>
     <script src = "/js/ages.js", charset="utf-8"></script>
 </body>
 </html>

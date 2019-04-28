@@ -75,3 +75,9 @@ div.tooltip {
     position: sticky;
     top: 0;
 }
+.ageAliveLabel{
+    font: 18px sans-serif;
+}
+.ageLabelLabel{
+    font: 10px sans-serif;
+}

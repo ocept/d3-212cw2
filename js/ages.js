@@ -22,10 +22,12 @@ var ageSvg = d3.select("#ageVis")
 ageSvg.append("g").attr("id","bars")
 ageSvg.append("g").attr("id","lines")
 ageSvg.append("g").attr("id","centreLabels")
-ageSvg.append("g").attr("id","rightText")
-    .append("text")
-ageSvg.append("g").attr("id","leftText")
-    .append("text")
+ageRightText = ageSvg.append("g").attr("id","rightText")
+ageRightText.append("text").attr("class", "ageAliveLabel")
+ageRightText.append("text").attr("class", "ageLabelLabel").text("still alive")
+ageLeftText = ageSvg.append("g").attr("id","leftText")
+ageLeftText.append("text").attr("class", "ageAliveLabel")
+ageLeftText.append("text").attr("class", "ageLabelLabel").text("still alive")
 ageSvg.append("g").attr("id","mouseBoxes")
 
 ageWidth = ageWidth - ageMargin.left - ageMargin.right;
@@ -160,9 +162,9 @@ function drawAgeVis(scrollPos){
             newRightLine.merge(rightLine)
                 .attr("d", rightLinePath(rightLineData))
             rightLine.exit().remove()
-
+            var rightPointData = rightLineData[rightLineData.length - 1]
             var rightPoint = ageSvg.select("#lines").selectAll("#rightPoint")
-                .data([rightLineData[rightLineData.length - 1]])
+                .data([rightPointData])
             rightPoint.enter()
                 .append("circle")
                     .attr("r",4)
@@ -188,6 +190,7 @@ function drawAgeVis(scrollPos){
                 .attr("d", leftLinePath(leftLineData))
             leftLine.exit().remove()
             
+            var leftPointData = leftLineData[leftLineData.length - 1]
             var leftPoint = ageSvg.select("#lines").selectAll("#leftPoint")
                 .data([leftLineData[leftLineData.length - 1]])
             leftPoint.enter()
@@ -199,16 +202,20 @@ function drawAgeVis(scrollPos){
                 .attr("cy",d=>ageScale(d[0]))
 
             //TEXT
-            ageSvg.select("#rightText").selectAll("text")
-                .data([rightLineData[rightLineData.length - 1]])
+            ageSvg.select("#rightText").selectAll(".ageAliveLabel")
                 .attr("x", ageWidth)
-                .attr("y",d=>ageScale(d[0]))
-                .text(d => (d[1]*100).toPrecision(2)+"%")
-            ageSvg.select("#leftText").selectAll("text")
-                .data([leftLineData[leftLineData.length - 1]])
+                .attr("y",d=>ageScale(rightPointData[0]))
+                .text(d => (rightPointData[1]*100).toPrecision(2)+"%")
+            ageSvg.select("#rightText").selectAll(".ageLabelLabel")
+                .attr("x", ageWidth)
+                .attr("y",d=>ageScale(rightPointData[0])+12)
+            ageSvg.select("#leftText").selectAll(".ageAliveLabel")
                 .attr("x", 0)
-                .attr("y",d=>ageScale(d[0]))
-                .text(d => (d[1]*100).toPrecision(2)+"%")
+                .attr("y",d=>ageScale(leftPointData[0]))
+                .text(d => (leftPointData[1]*100).toPrecision(2)+"%")
+            ageSvg.select("#leftText").selectAll(".ageLabelLabel")
+                .attr("x", 0)
+                .attr("y",d=>ageScale(leftPointData[0])+12)
 
             //BOXES FOR MOUSE OVER
             ageSvg.select("#mouseBoxes").selectAll(".mouseOverBox")
