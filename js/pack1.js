@@ -1,13 +1,21 @@
 var t2Width = 500
 let t2Height = 500
+var t2margin = {top: 30, bottom:5, left:5, right:5}
 var rawData = d3.csv('/finalData/tree3.csv')
 var tree = d3.select("#treeVis")
     .append("g")
 tree.append("div")
     .attr("id", "treeLabel")
 var t2Svg = tree.append("svg")
-    .attr("width", t2Width)
-    .attr("height", t2Height)
+        .attr("width", t2Width)
+        .attr("height", t2Height)
+t2Svg.append("g").attr("id","legend")
+t2Svg.append('g')
+        .attr('transform', 'translate(' + t2margin.left + ',' + t2margin.top+')')
+        .attr("id","pack")
+t2Width = t2Width - t2margin.left - t2margin.right;
+t2Height = t2Height - t2margin.top - t2margin.bottom;
+
 var t2TTip = tree.append("div")
     .attr("class", "tooltip")
     .style("opacity", 0)
@@ -25,7 +33,7 @@ function tree2Update(){
     "Non-communicable diseases",
     "Communicable, maternal, neonatal, and nutritional diseases"]
     var offset = 15;
-    var legend = t2Svg.selectAll(".legend")
+    var legend = t2Svg.select("#legend").selectAll(".legend")
         .data(legendEntries)
         .enter()
         .append("g")
@@ -71,7 +79,7 @@ function tree2Update(){
             .size([t2Width*scaleFactor, t2Height*scaleFactor])
         treeLayout(hroot)
 
-        var nodes = t2Svg.selectAll(".treeNode")
+        var nodes = t2Svg.select("#pack").selectAll(".treeNode")
                 .data(hroot.descendants())
 
         var new_nodes = nodes.enter()
