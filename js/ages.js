@@ -1,15 +1,16 @@
 d3.select(window)
-    .on("scroll", checkScrollPosition)
+    .on("scroll.ageScroll", checkScrollPosition)
     
 let ageMargin = {top: 10, bottom:10, left:60, right:60}
 let ageWidth = 800
 let ageHeight = 600;
-
+var ageScrollHeight = 1000
 function checkScrollPosition(){
-	var pagePos = window.pageYOffset
-    var agePos = document.getElementById("ageVis").getBoundingClientRect().top + ageHeight
-	if(agePos < pagePos) {
-		drawAgeVis(pagePos - agePos)
+    var ageTop = document.getElementById("ageVis").getBoundingClientRect().top
+    var ageEnd = document.getElementById("ageEnd").getBoundingClientRect().top
+    // console.log(ageTop, ageEnd)
+	if(ageTop < 1) {
+		drawAgeVis(ageScrollHeight - ageEnd)
 	}
 }
 var ageSvg = d3.select("#ageVis")
@@ -33,9 +34,9 @@ ageHeight = ageHeight - ageMargin.top - ageMargin.bottom;
 function drawAgeVis(scrollPos){
     let centreWidth = 60
 
-    let scrollHeight = 1000
+
 	let ageCategories = 22
-    let scrollPoint = Math.floor((scrollPos) / (scrollHeight / ageCategories))
+    let scrollPoint = Math.floor((scrollPos) / (ageScrollHeight / ageCategories))
 
     let t = d3.transition()
         .duration(300)
