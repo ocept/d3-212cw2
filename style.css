@@ -1,7 +1,14 @@
 body{
-    width:1200px;
+    max-width:1000px;
     margin: auto;
+    font-family: Tahoma, Geneva, sans-serif;
 
+}
+h1, h2, h3{
+    background-color: #555566;
+    color: white;
+    border-radius: 3px;
+    padding: 2px 5px 2px 5px;
 }
 div.tooltip {	
     position: absolute;			

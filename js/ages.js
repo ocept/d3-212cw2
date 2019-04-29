@@ -3,7 +3,7 @@ d3.select(window)
     
 let ageMargin = {top: 10, bottom:10, left:60, right:60}
 let ageWidth = 900
-let ageHeight = 800;
+let ageHeight = 700;
 var ageScrollHeight = 1000
 function checkScrollPosition(){
     var ageTop = document.getElementById("ageVis").getBoundingClientRect().top
