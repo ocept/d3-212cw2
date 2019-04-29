@@ -2,8 +2,8 @@ d3.select(window)
     .on("scroll.ageScroll", checkScrollPosition)
     
 let ageMargin = {top: 10, bottom:10, left:60, right:60}
-let ageWidth = 800
-let ageHeight = 600;
+let ageWidth = 900
+let ageHeight = 800;
 var ageScrollHeight = 1000
 function checkScrollPosition(){
     var ageTop = document.getElementById("ageVis").getBoundingClientRect().top
@@ -86,10 +86,10 @@ function drawAgeVis(scrollPos){
                 .attr("class", function(d){
                     return ("barText"+d.ageCat)
                 })
-                .attr("y",18)
+                .attr("y",22)
                 .attr("x", d => dieScale(d.percent_dying) + 10)
                 .attr("opacity",0)
-                .attr("stroke", wbAreaColours["World Bank High Income"])
+                .attr("style", "fill:" + wbAreaColours["World Bank High Income"] + ";font:20px sans-serif;")
 
             rightBars.exit()
                 .remove()
@@ -120,11 +120,11 @@ function drawAgeVis(scrollPos){
                 .attr("class", function(d){
                     return ("barText"+d.ageCat)
                 })
-                .attr("y",18)
+                .attr("y",22)
                 .attr("x",-5)
-                .attr("style","text-anchor: end")
                 .attr("opacity",0)
-                .attr("stroke", wbAreaColours["World Bank Low Income"])
+                // .attr("fill", wbAreaColours["World Bank Low Income"])
+                .attr("style", "fill:" + wbAreaColours["World Bank Low Income"] + ";font:20px sans-serif; text-anchor: end")
             
             leftBars.exit()
                 .remove()
@@ -144,9 +144,12 @@ function drawAgeVis(scrollPos){
             var rightLinePath = d3.line()
                 .x(d => aliveScale(d[1]) + ageWidth/2 + centreWidth/2)
                 .y(d => ageScale(d[0]))
+                .curve(d3.curveMonotoneX)
             var leftLinePath = d3.line()
                 .x(d => ageWidth/2 - centreWidth/2 - aliveScale(d[1]))
                 .y(d => ageScale(d[0]))
+                .curve(d3.curveMonotoneX)
+
 
             var rightLineData = rightData.map(function(d,i){
                     return [i, d.percent_alive]
