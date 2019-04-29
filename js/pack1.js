@@ -93,10 +93,12 @@ function tree2Update(){
         new_nodes.merge(nodes)
             .select("circle")
             .on("mouseover", function(d){
-                t2TTip.html(d.data.key + "<BR>" + Math.round(d.value))
-                    .style("opacity", 1)
-                    .style("left", d3.event.pageX + 10 +"px")
-                    .style("top", d3.event.pageY + "px")
+                if(d.depth > 0){
+                    t2TTip.html(d.data.key + "<BR>" + Math.round(d.value))
+                        .style("opacity", 1)
+                        .style("left", d3.event.pageX + 10 +"px")
+                        .style("top", d3.event.pageY + "px")
+                }
             })
             .on("mouseout", function(d){
                 t2TTip.style("opacity", 0)
