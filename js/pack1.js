@@ -21,7 +21,6 @@ var t2TTip = tree.append("div")
     .style("opacity", 0)
 
 function tree2Update(){
-
     var colourKey = {"Injuries": "#66c2a5",
         "Non-communicable diseases": "#fc8d62",
         "Communicable, maternal, neonatal, and nutritional diseases":"#8da0cb"}
@@ -70,9 +69,10 @@ function tree2Update(){
         selectedTree = document.getElementById("incomeSlider").value
         var hroot = d3.hierarchy(treeData[selectedTree], function(d) { return d.values})
             .sum(function(d){return d.value})
-
+        selectedTree.attr
         tree.select("#treeLabel")
             .text(hroot.data.key)
+            // .attr("style","background-color:"+wbAreaColours[hroot.data.key])
 
         var scaleFactor = Math.sqrt(hroot.value / 38331)
         var treeLayout = d3.pack()

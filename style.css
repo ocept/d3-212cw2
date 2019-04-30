@@ -38,7 +38,7 @@ div.tooltip {
     background: #30b030;
     cursor: pointer;
 }
-.slider::-moz-slider-thumb{
+.slider::-moz-range-thumb{
     -moz-appearance: none; 
     appearance: none;
     width:38px;
@@ -53,15 +53,16 @@ div.tooltip {
 #incomeSlider{
     width: 50%;
     margin: auto;
-
 }
 .legend{
     font: 16px sans-serif;	
     cursor: pointer;
 }
 #treeVis{
-    width: auto;;
-    margin: auto;
+    margin-top: 7px;
+}
+#treeLabel{
+    font-size: 18px;
 }
 .nodeLabel{
     font: 10px sans-serif; 
