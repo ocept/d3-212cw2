@@ -172,7 +172,7 @@ function drawAgeVis(scrollPos){
                     return [i, d.percent_alive]
                 })
             var rightLine = ageSvg.select("#lines").selectAll(".rightLine")
-                .data(rightLineData)
+                .data([rightLineData])
             var newRightLine = rightLine.enter()
                 .append("path")
                     .attr("class","rightLine")
@@ -198,7 +198,7 @@ function drawAgeVis(scrollPos){
                 return [i, d.percent_alive]
             })
             var leftLine = ageSvg.select("#lines").selectAll(".leftLine")
-                .data(leftLineData)
+                .data([leftLineData])
 
             var newLeftLine = leftLine.enter()
                 .append("path")
