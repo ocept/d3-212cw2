@@ -1,7 +1,7 @@
 d3.select(window)
     .on("scroll.ageScroll", checkScrollPosition)
     
-let ageMargin = {top: 10, bottom:10, left:60, right:60}
+let ageMargin = {top: 22, bottom:10, left:60, right:60}
 let ageWidth = 900
 let ageHeight = 700;
 var ageScrollHeight = 1000
@@ -32,6 +32,23 @@ ageSvg.append("g").attr("id","mouseBoxes")
 
 ageWidth = ageWidth - ageMargin.left - ageMargin.right;
 ageHeight = ageHeight - ageMargin.top - ageMargin.bottom;
+
+//Top labels
+ageSvg.append("text")
+    .attr("x", ageWidth/4)
+    .attr("y", -8)
+    .attr("class", "ageTopLabel")
+    .text("Low Income")
+ageSvg.append("text")
+    .attr("x", ageWidth/2)
+    .attr("y", -8)
+    .attr("class", "ageTopLabel")
+    .text("Age")
+ageSvg.append("text")
+    .attr("x", 3/4 * ageWidth)
+    .attr("y", -8)
+    .attr("class", "ageTopLabel")
+    .text("High Income")
 
 function drawAgeVis(scrollPos){
     let centreWidth = 60
@@ -86,10 +103,10 @@ function drawAgeVis(scrollPos){
                 .attr("class", function(d){
                     return ("barText"+d.ageCat)
                 })
-                .attr("y",22)
+                .attr("y",20)
                 .attr("x", d => dieScale(d.percent_dying) + 10)
                 .attr("opacity",0)
-                .attr("style", "fill:" + wbAreaColours["World Bank High Income"] + ";font:20px sans-serif;")
+                .attr("style", "fill:" + wbAreaColours["World Bank High Income"] + ";font:18px sans-serif;")
 
             rightBars.exit()
                 .remove()
@@ -120,15 +137,16 @@ function drawAgeVis(scrollPos){
                 .attr("class", function(d){
                     return ("barText"+d.ageCat)
                 })
-                .attr("y",22)
+                .attr("y",20)
                 .attr("x",-5)
                 .attr("opacity",0)
                 // .attr("fill", wbAreaColours["World Bank Low Income"])
-                .attr("style", "fill:" + wbAreaColours["World Bank Low Income"] + ";font:20px sans-serif; text-anchor: end")
+                .attr("style", "fill:" + wbAreaColours["World Bank Low Income"] + ";font:18px sans-serif; text-anchor: end")
             
             leftBars.exit()
                 .remove()
             
+            //CENTRE LABELS
             centreLabels = ageSvg.select("#centreLabels").selectAll(".ageLabel")
                 .data(leftData.slice(0,leftData.length-1))
             centreLabels.enter()
@@ -137,7 +155,6 @@ function drawAgeVis(scrollPos){
                 .attr("x",ageWidth/2)
                 .attr("y", function(d,i){return ageScale(i) + 18})
                 .text(d => d.age_group_name)
-
             centreLabels.exit().remove()
                 
             //LINES

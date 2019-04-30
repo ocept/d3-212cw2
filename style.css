@@ -79,6 +79,10 @@ div.tooltip {
     font: 12px sans-serif;
     text-anchor: middle;
 }
+.ageTopLabel{
+    font-size: 15px;
+    text-anchor: middle;
+}
 #ageVis{
     position: sticky;
     top: 0;
