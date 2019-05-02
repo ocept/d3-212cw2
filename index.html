@@ -2,29 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Data and stuff</title>
+    <title>Global Health and Health Inequality</title>
     <script src="//d3js.org/d3.v5.min.js" charset="utf-8"></script>
     <link rel = "stylesheet" href="style.css"/>
 </head>
 <body>
+    <h1>Global Health and Health Inequality</h1>
+    In this presentation I will attempt to show how data from the <a href="http://ghdx.healthdata.org/gbd-2017">2017 Global Burden of Disease</a> study 
+    can be used to illustrate a narrative of global health and health inequality.
+
+    <h2>Global health against GDP - 1960 to 2017</h2>
+    The scatter diagram below plots life expectancy against GDP per capita. 
+    Each bubble represents a country, with its size being proportional to the population of that country. Countries are coloured according to their geographic location.
+    Mouse over the location legend to isolate countries from that region. Drag the slider or click the play button to change the year displayed.
     <div class="slidercontainer">
         <button id = "playScatter">Play</button><span id="yearDisplay">1960</span>
         <input type="range" min="1960" max="2015" value="1960" step="5" class="slider" id="yearSlider"> 
     </div>
+    <div id="scatterVis"></div>
 
-    <div id="scatterVis">
-    </div><br>
+    <h2>Mortality Causes by economic group</h1>
+    The visual below shows years of life lost due to premature mortality, by mortality cause.
+    These are divided into 3 high-level categories and a number of subcategories for each. 
+    Each cause is represented by a bubble with its size indicating the number of years of life lost. 
+    Years of life lost are calculated by subtracting the age at death from the life expectancy for a person of that age.
+    Mouse over any cause to see its name and it's value. Values are shown as the number of years of life lost per 1000 head of population. 
+    Drag the slider to switch between showing values for low income and high income countries.
+
     <div id="treeVis">
         <input type="range" min="0" max="3" value="0" step="1" class="slider" id="incomeSlider"> 
     </div>
 
+    <h2>Change in mortality for a single cause.</h1>
     <select id = "selectCause" onchange="linesUpdate()"></select>
-    
     <div id="linesVis"></div>
-    <div id="ageVis" style="height: 1000px";></div>
+
+    <div id="ageVis" style="height: 1000px";>
+        <h2 id="ageTitle">Mortality by age-group</h2></div>
     <div id="ageEnd" style="height: 1000px"></div>
    
-   Test123
+   
     <script>
     //update slider value
     var yearSlider = document.getElementById("yearSlider")
