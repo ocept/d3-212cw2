@@ -1,5 +1,5 @@
 body{
-    max-width:1200px;
+    max-width:1100px;
     margin: auto;
     font-family: Tahoma, Geneva, sans-serif;
 
@@ -28,6 +28,7 @@ div.tooltip {
     height: 20px;
     background: #bbbbbb;
     border-radius: 8px;
+    margin: auto;
 }
 .slider::-webkit-slider-thumb{
     -webkit-appearance: none; 
@@ -49,9 +50,6 @@ div.tooltip {
 }
 .slidercontainer{
     width: 80%;
-}
-#incomeSlider{
-    width: 50%;
     margin: auto;
 }
 .legend{
@@ -63,6 +61,7 @@ div.tooltip {
 }
 #treeLabel{
     font-size: 18px;
+    text-align: center;
 }
 .nodeLabel{
     font: 10px sans-serif; 

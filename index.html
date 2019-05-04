@@ -21,16 +21,18 @@
     </div>
     <div id="scatterVis"></div>
 
-    <h2>Mortality Causes by economic group</h1>
-    The visual below shows years of life lost due to premature mortality, by mortality cause.
+    <h2>Years of life lost and by cause of mortality and economic group</h1>
+    The visual to the left below shows years of life lost due to premature mortality, by mortality cause in 2017.
     These are divided into 3 high-level categories and a number of subcategories for each. 
     Each cause is represented by a bubble with its size indicating the number of years of life lost. 
     Years of life lost are calculated by subtracting the age at death from the life expectancy for a person of that age.
     Mouse over any cause to see its name and it's value. Values are shown as the number of years of life lost per 1000 head of population. 
-    Drag the slider to switch between showing values for low income and high income countries.
+    Drag the slider to switch between showing values for low income and high income countries. The map to the right indicates the countries that make up each income group.
 
     <div id="treeVis">
-        <input type="range" min="0" max="3" value="0" step="1" class="slider" id="incomeSlider"> 
+        <div class="slidercontainer">
+            <input type="range" min="0" max="3" value="0" step="1" class="slider" id="incomeSlider"> 
+        </div>
     </div>
 
     <h2>Change in mortality for a single cause.</h1>
