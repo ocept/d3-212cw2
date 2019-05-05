@@ -76,7 +76,6 @@ function linesUpdate(){
     var yscale = d3.scaleLinear()
         .range([l1height, 0])
 
-    console.log(selectCause.property("value"))
     var selectedCause = selectCause.property("value")
     Promise.all([
         d3.csv("/finalData/causeLines1.csv"),
@@ -117,13 +116,10 @@ function linesUpdate(){
         l1svg.selectAll(".line")
             .data(causeData)
             .transition(t)
-            .attr("d", function(d,i){
-                var linepath = []
-                for(i = 0; i < d.values.length; i++)
-                {
-                    linepath.push([d.values[i].year, d.values[i].GBD_val])
-                }
-                return line(linepath)
+            .attr("d", function(d){
+                return line(d.values.map(function (d){
+                    return [d.year, d.GBD_val]
+                }))
             })
         
         x_axis = d3.axisBottom()
@@ -160,12 +156,10 @@ function linesUpdate(){
 
         new_l2plot.merge(l2plot)
             .transition(t)
-            .attr("d", function(d,i){
-                var linepath = []
-                for(i =0; i < d.values.length; i++){
-                    linepath.push([d.values[i].year, d.values[i].GBD_val])
-                }
-                return line(linepath)
+            .attr("d", function(d){
+                return line(d.values.map(function (d){
+                    return [d.year, d.GBD_val]
+                }))
             })
         
         l2svg.append("g")
@@ -196,6 +190,7 @@ function linesUpdate(){
             .attr("class","l2label")
             .attr("fill", d => d3.interpolateRgb(areaColours[d.name],"#000000")(0.3))
         new_l2label.merge(l2label)
+            .transition(t)
             .attr("y", d=> d.labelY)
             .text(d => d.name)
 
