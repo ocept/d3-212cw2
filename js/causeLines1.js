@@ -178,31 +178,57 @@ function linesUpdate(){
         l2svg.select(".y_axis")
             .transition(t)
             .call(y_axis)
-// console.log(l2causeData)
+
         //right chart labels
-    var lab =     l2causeData.map(function(d){
+        var labels = l2causeData.map(function(d){
             return{
                 name: d.key,
-                y_value: d.values[d.values.length -1].GBD_val
+                labelY: yscale(d.values[d.values.length -1].GBD_val)
             }
         })
-        // console.log(lab)
+        relax(labels)
+
         l2label = l2svg.selectAll(".l2label")
-            .data(l2causeData.map(function(d){
-                return{
-                    name: d.key,
-                    y_value: yscale(d.values[d.values.length -1].GBD_val)
-                }
-            }))
+            .data(labels)
         
         new_l2label = l2label.enter().append("text")
             .attr("x",l2width+5)
             .attr("class","l2label")
             .attr("fill", d => d3.interpolateRgb(areaColours[d.name],"#000000")(0.3))
         new_l2label.merge(l2label)
-            .attr("y", d=> d.y_value)
+            .attr("y", d=> d.labelY)
             .text(d => d.name)
-            
 
     })
 }linesUpdate()
+
+//from: https://bl.ocks.org/martinjc/44ce9adef38db9878caded9b582b4f46
+function relax(data) {
+    var spacing = 16;
+    var dy = 2;
+    var repeat = false;
+    var count = 0;
+    data.forEach(function(dA, i) {
+        var yA = dA.labelY;
+        data.forEach(function(dB, j) {
+            var yB = dB.labelY;
+            if (i === j) {
+                return;
+            }
+            diff = yA - yB;
+            if (Math.abs(diff) > spacing) {
+                return;
+            }
+            repeat = true;
+            magnitude = diff > 0 ? 1 : -1;
+            adjust = magnitude * dy;
+            dA.labelY = +yA + adjust;
+            dB.labelY = +yB - adjust;
+            dB.labelY = dB.labelY > l2height ? l2height : dB.labelY
+            dA.labelY = dA.labelY > l2height ? l2height : dA.labelY
+        })
+    })
+    if (repeat) {
+        relax(data);
+    }
+}
