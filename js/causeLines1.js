@@ -1,6 +1,9 @@
 var l1width = 500;
 var l1height = 500;
 var l1margin = {top: 55, bottom:20, left:40, right:20}
+var l2width = 605;
+var l2height = 500;
+var l2margin = {top: 55, bottom:20, left:40, right:125}
 var allCauses = ['Cardiovascular diseases', 'Chronic respiratory diseases',
 'Diabetes and kidney diseases', 'Digestive diseases',
 'Enteric infections',
@@ -31,16 +34,18 @@ var l1svg = d3.select("#linesVis")
 
 var l2svg = d3.select("#linesVis")
     .append("svg")
-        .attr('width', l1width)
-        .attr('height', l1height)
+        .attr('width', l2width)
+        .attr('height', l2height)
     .append("g")
         .attr('transform', 'translate(' + l1margin.left + ',' + l1margin.top+')')
 
 l1width = l1width - l1margin.left - l1margin.right;
 l1height = l1height - l1margin.top - l1margin.bottom;
+l2width = l2width - l2margin.left - l2margin.right;
+l2height = l2height - l2margin.top - l2margin.bottom;
 
 function linesUpdate(){
-    //draw legend
+    //draw legend for chart 1
     var offset = 15
     var legend = l1svg.selectAll(".legend")
         .data(Object.keys(wbAreaColours))
@@ -144,19 +149,16 @@ function linesUpdate(){
             .key(d => d.location_name)
             .entries(l2causeData)
         
-        l2plot = l2svg.selectAll(".plot")
+        l2plot = l2svg.selectAll(".line")
             .data(l2causeData)
-            .enter()
-            .append("g")
-            .attr("class", "plot")
+        new_l2plot = l2plot.enter()
             .append("path")
             .attr("class","line")
             .attr("fill", "none")
             .attr("stroke", d => areaColours[d.key])
             .attr("stroke-width", "3px")
 
-        l2svg.selectAll(".line")
-            .data(l2causeData)
+        new_l2plot.merge(l2plot)
             .transition(t)
             .attr("d", function(d,i){
                 var linepath = []
@@ -176,5 +178,31 @@ function linesUpdate(){
         l2svg.select(".y_axis")
             .transition(t)
             .call(y_axis)
+// console.log(l2causeData)
+        //right chart labels
+    var lab =     l2causeData.map(function(d){
+            return{
+                name: d.key,
+                y_value: d.values[d.values.length -1].GBD_val
+            }
+        })
+        // console.log(lab)
+        l2label = l2svg.selectAll(".l2label")
+            .data(l2causeData.map(function(d){
+                return{
+                    name: d.key,
+                    y_value: yscale(d.values[d.values.length -1].GBD_val)
+                }
+            }))
+        
+        new_l2label = l2label.enter().append("text")
+            .attr("x",l2width+5)
+            .attr("class","l2label")
+            .attr("fill", d => d3.interpolateRgb(areaColours[d.name],"#000000")(0.3))
+        new_l2label.merge(l2label)
+            .attr("y", d=> d.y_value)
+            .text(d => d.name)
+            
+
     })
 }linesUpdate()

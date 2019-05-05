@@ -1,5 +1,5 @@
 body{
-    max-width:1100px;
+    max-width:1200px;
     margin: auto;
     font-family: Tahoma, Geneva, sans-serif;
 
@@ -91,4 +91,7 @@ div.tooltip {
 }
 .ageLabelLabel{
     font: 10px sans-serif;
+}
+.l2label{
+    font-size: 10px;
 }
