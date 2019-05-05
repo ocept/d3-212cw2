@@ -35,12 +35,19 @@
         </div>
     </div>
 
-    <h2>Change in mortality for a single cause.</h1>
-    <select id = "selectCause" onchange="linesUpdate()"></select>
+    <h2>Change in years of life lost for a single mortality cause.</h1>
+    Select a cause of mortality below to see the change in years of life lost per 1000 population, from 1990 to 2017. 
+    The first chart shows by world bank income group, the second by geographic area.
+    <br><br><select id = "selectCause" onchange="linesUpdate()"></select>
     <div id="linesVis"></div>
 
     <div id="ageVis" style="height: 1000px";>
-        <h2 id="ageTitle">Mortality by age-group</h2></div>
+        <h2 id="ageTitle">Mortality by age group</h2>
+        The coloured bars below indicate the percentage of population dying in each age category, 
+        for World Bank Low Income countries on the left and World Bank High Income countries on the right.
+        The 2 black lines indicate the percentage of each population still alive at the end of the shown period.
+        <br>
+    </div>
     <div id="ageEnd" style="height: 1000px"></div>
    
    

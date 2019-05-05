@@ -1,7 +1,7 @@
 d3.select(window)
     .on("scroll.ageScroll", checkScrollPosition)
     
-let ageMargin = {top: 22, bottom:10, left:60, right:60}
+let ageMargin = {top: 22, bottom:20, left:60, right:60}
 let ageWidth = 900
 let ageHeight = 700;
 var ageScrollHeight = 1000
