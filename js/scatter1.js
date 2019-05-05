@@ -112,7 +112,7 @@ function scatterUpdate(){
         new_dots.merge(dots)
             .on('mouseover', function(d){
                 //show tooltip
-                ttip.html(d.Location)
+                ttip.html(d.Location + "<BR>Life expectancy: "+ d.LE_value + "<BR>GDP: "+d3.format(".3~s")(d.GDP_value))
                     .style("opacity",1)
                     .style("left",d3.event.pageX + 10 + "px")
                     .style("top", d3.event.pageY + "px")
