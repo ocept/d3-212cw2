@@ -1,11 +1,11 @@
 var l1width = 500;
 var l1height = 500;
-var l1margin = {top: 20, bottom:20, left:40, right:20}
+var l1margin = {top: 55, bottom:20, left:40, right:20}
 var allCauses = ['Cardiovascular diseases', 'Chronic respiratory diseases',
 'Diabetes and kidney diseases', 'Digestive diseases',
 'Enteric infections',
 'HIV/AIDS and sexually transmitted infections',
-'Maternal and neonatal disorders', 'Mental disorders',
+'Maternal and neonatal disorders', 
 'Musculoskeletal disorders',
 'Neglected tropical diseases and malaria', 'Neoplasms',
 'Neurological disorders', 'Nutritional deficiencies',
@@ -40,6 +40,27 @@ l1width = l1width - l1margin.left - l1margin.right;
 l1height = l1height - l1margin.top - l1margin.bottom;
 
 function linesUpdate(){
+    //draw legend
+    var offset = 15
+    var legend = l1svg.selectAll(".legend")
+        .data(Object.keys(wbAreaColours))
+        .enter()
+        .append('g')
+            .attr("class", "legend")
+            .attr("transform", function(d,i){
+                return "translate(10," + (-50 + i*offset)+")"
+            })
+    legend.append('rect')
+        .attr("width", 14)
+        .attr("height",14)
+        .style("fill", function(d,i){
+            return wbAreaColours[d]
+        })
+    legend.append('text')
+        .attr("x",20)
+        .attr("y",13)
+        .text(function(d){return d})
+
     var t = d3.transition()
         .duration(200)
     var line = d3.line()
