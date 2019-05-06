@@ -8,11 +8,11 @@
 </head>
 <body>
     <h1>Global Health and Health Inequality</h1>
-    In this presentation I will attempt to show how data from the <a href="http://ghdx.healthdata.org/gbd-2017">2017 Global Burden of Disease</a> study 
+    In this presentation I will show how data from the <a href="http://ghdx.healthdata.org/gbd-2017">2017 Global Burden of Disease</a> study 
     can be used to illustrate a narrative of global health and health inequality.
 
     <h2>Global health against GDP - 1960 to 2017</h2>
-    The scatter diagram below plots life expectancy against GDP per capita. 
+    The scatter diagram below plots life expectancy against gross domestic product per capita. 
     Each bubble represents a country, with its size being proportional to the population of that country. Countries are coloured according to their geographic location.
     Mouse over the location legend to isolate countries from that region. Drag the slider or click the play button to change the year displayed.
     <div class="slidercontainer">
@@ -22,11 +22,11 @@
     <div id="scatterVis"></div>
 
     <h2>Years of life lost and by cause of mortality and economic group</h1>
-    The visual to the left below shows years of life lost due to premature mortality, by mortality cause in 2017.
-    These are divided into 3 high-level categories and a number of subcategories for each. 
+    The visual to below to the left shows years of life lost due to premature mortality by cause, for 2017.
+    Mortality causes are divided into 3 high-level categories and a number of subcategories for each. 
     Each cause is represented by a bubble with its size indicating the number of years of life lost. 
     Years of life lost are calculated by subtracting the age at death from the life expectancy for a person of that age.
-    Mouse over any cause to see its name and it's value. Values are shown as the number of years of life lost per 1000 head of population. 
+    Mouse over any cause bubble to see its name and it's value. Values are shown as the average number of years of life lost per 1000 head of population. 
     Drag the slider to switch between showing values for low income and high income countries. The map to the right indicates the countries that make up each income group.
 
     <div id="treeVis">
@@ -41,16 +41,17 @@
     <br><br><select id = "selectCause" onchange="linesUpdate()"></select>
     <div id="linesVis"></div>
 
-    <div id="ageVis" style="height: 1000px";>
+    <div id="ageVis" style="height: 900px";>
         <h2 id="ageTitle">Mortality by age group</h2>
         The coloured bars below indicate the percentage of population dying in each age category, 
         for World Bank Low Income countries on the left and World Bank High Income countries on the right.
-        The 2 black lines indicate the percentage of each population still alive at the end of the shown period.
+        The 2 black lines indicate the percentage of each population still alive at the end of the shown period. Scroll down to show.
         <br>
     </div>
     <div id="ageEnd" style="height: 1000px"></div>
-   
-   
+    <h2>Conclusions</h2>
+    
+
     <script>
     //update slider value
     var yearSlider = document.getElementById("yearSlider")

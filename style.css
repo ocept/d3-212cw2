@@ -28,7 +28,7 @@ div.tooltip {
     height: 20px;
     background: #bbbbbb;
     border-radius: 8px;
-    margin: auto;
+    margin-top: 7px;
 }
 .slider::-webkit-slider-thumb{
     -webkit-appearance: none; 
@@ -51,6 +51,13 @@ div.tooltip {
 .slidercontainer{
     width: 80%;
     margin: auto;
+}
+#yearSlider{
+    width: 80%;
+}
+#playScatter{
+    width: 55px;
+
 }
 .legend{
     font: 16px sans-serif;	

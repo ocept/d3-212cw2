@@ -1,6 +1,6 @@
 var width = 900;
 var height = 700;
-var margin = {top: 20, bottom:30, left:35, right:60}
+var margin = {top: 20, bottom:35, left:35, right:60}
 var svg = d3.select("#scatterVis")
     .append("svg")
         .attr('width', width)
@@ -150,7 +150,7 @@ function scatterUpdate(){
 //add axis labels
 svg.append("text")
     .attr("transform", "translate("+ width/2 + "," + (height + margin.bottom - 5) + ")")
-    .text("GDP Per Capita")
+    .text("GDP Per Capita (USD)")
     .attr("class", "axisLabel")
 svg.append("text")
     .attr("transform", "rotate(-90)")
