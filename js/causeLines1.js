@@ -1,9 +1,9 @@
 var l1width = 500;
 var l1height = 500;
-var l1margin = {top: 55, bottom:20, left:40, right:20}
+var l1margin = {top: 65, bottom:20, left:40, right:20}
 var l2width = 605;
 var l2height = 500;
-var l2margin = {top: 55, bottom:20, left:40, right:125}
+var l2margin = {top: 65, bottom:20, left:40, right:125}
 var allCauses = ['Cardiovascular diseases', 'Chronic respiratory diseases',
 'Diabetes and kidney diseases', 'Digestive diseases',
 'Enteric infections',
@@ -53,7 +53,7 @@ function linesUpdate(){
         .append('g')
             .attr("class", "legend")
             .attr("transform", function(d,i){
-                return "translate(10," + (-50 + i*offset)+")"
+                return "translate(10," + (-60 + i*offset)+")"
             })
     legend.append('rect')
         .attr("width", 14)
@@ -71,6 +71,7 @@ function linesUpdate(){
     var line = d3.line()
         .x(d => xscale(d[0]))
         .y(d => yscale(d[1]))
+        .curve(d3.curveMonotoneX)
     var xscale = d3.scaleLinear()
         .range([0, l1width])
     var yscale = d3.scaleLinear()
@@ -151,10 +152,10 @@ function linesUpdate(){
             .append("path")
             .attr("class","line")
             .attr("fill", "none")
-            .attr("stroke", d => areaColours[d.key])
             .attr("stroke-width", "3px")
 
         new_l2plot.merge(l2plot)
+            .attr("stroke", d => areaColours[d.key])
             .transition(t)
             .attr("d", function(d){
                 return line(d.values.map(function (d){
@@ -188,8 +189,8 @@ function linesUpdate(){
         new_l2label = l2label.enter().append("text")
             .attr("x",l2width+5)
             .attr("class","l2label")
-            .attr("fill", d => d3.interpolateRgb(areaColours[d.name],"#000000")(0.3))
         new_l2label.merge(l2label)
+            .attr("stroke", d => d3.interpolateRgb(areaColours[d.name],"#000000")(0.3))
             .transition(t)
             .attr("y", d=> d.labelY)
             .text(d => d.name)
