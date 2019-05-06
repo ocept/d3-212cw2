@@ -40,18 +40,27 @@
     The first chart shows by world bank income group, the second by geographic area.
     <br><br><select id = "selectCause" onchange="linesUpdate()"></select>
     <div id="linesVis"></div>
-
-    <div id="ageVis" style="height: 900px";>
-        <h2 id="ageTitle">Mortality by age group</h2>
-        The coloured bars below indicate the percentage of population dying in each age category, 
-        for World Bank Low Income countries on the left and World Bank High Income countries on the right.
-        The 2 black lines indicate the percentage of each population still alive at the end of the shown period. Scroll down to show.
-        <br>
+    <div>
+        <div id="ageVis" style="height: 1000px";>
+            <h2 id="ageTitle">Mortality by age group</h2>
+            The coloured bars below indicate the percentage of population dying in each age category, 
+            for World Bank Low Income countries on the left and World Bank High Income countries on the right.
+            The 2 black lines indicate the percentage of each population still alive at the end of the shown period. Scroll down to show.
+            <br>
+        </div>
+        <div id="ageEnd" style="height: 1000px"></div>
     </div>
-    <div id="ageEnd" style="height: 1000px"></div>
     <h2>Conclusions</h2>
-    
+    The data presented here shows clearly the link between a countries economic status and health outcomes. 
+    It also shows a trend toward improved health outcomes across all income categories and geographic regions. 
+    This general trend is seen across most causes of mortality although some show a different pattern.
 
+    <br><br><br><br>
+    Data used from: <br>
+    <a href="http://ghdx.healthdata.org/gbd-2017">Global Health Data Exchange</a><br>
+    <a href="https://data.worldbank.org/indicator/NY.GDP.PCAP.KD">The World Bank - GDP per capita (constant 2010 US$)</a><br>
+    <a href="https://data.worldbank.org/indicator/sp.pop.totl">The World Bank - Population,total</a><br>
+    <a href="https://www.naturalearthdata.com/">Natural Earth</a><br><br>
     <script>
     //update slider value
     var yearSlider = document.getElementById("yearSlider")

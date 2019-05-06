@@ -190,7 +190,7 @@ function linesUpdate(){
             .attr("x",l2width+5)
             .attr("class","l2label")
         new_l2label.merge(l2label)
-            .attr("stroke", d => d3.interpolateRgb(areaColours[d.name],"#000000")(0.3))
+            .attr("fill", d => d3.interpolateRgb(areaColours[d.name],"#000000")(0.3))
             .transition(t)
             .attr("y", d=> d.labelY)
             .text(d => d.name)
