@@ -79,8 +79,8 @@ function linesUpdate(){
 
     var selectedCause = selectCause.property("value")
     Promise.all([
-        d3.csv("/finalData/causeLines1.csv"),
-        d3.csv("/finalData/causeLines2.csv")
+        d3.csv("finalData/causeLines1.csv"),
+        d3.csv("finalData/causeLines2.csv")
     ])
     .then(function(data) {
         causeData = data[0].filter(d => d.cause_name == selectedCause)

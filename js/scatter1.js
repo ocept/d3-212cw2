@@ -26,7 +26,7 @@ let ttip = d3.select("body").append("div")
 var t = d3.transition()
     .duration(100)
     
-let csvData = d3.csv('/finalData/LE_Scatter.csv');
+let csvData = d3.csv('finalData/LE_Scatter.csv');
 function scatterUpdate(){
     
     csvData.then(function(data){

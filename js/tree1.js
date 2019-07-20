@@ -7,7 +7,7 @@ function drawTree(){
         "Non-communicable diseases": "#fc8d62",
         "Communicable, maternal, neonatal, and nutritional diseases":"#8da0cb"}
 
-    var rawData = d3.csv('/finalData/tree1.csv')
+    var rawData = d3.csv('finalData/tree1.csv')
     rawData.then(function(data){
         data.forEach(function(d) {
             d.GBD_val = +d.GBD_val

@@ -8,7 +8,7 @@ var mapSvg = d3.select("#treeVis")
         .attr("width", mapWidth)
 
 function mapUpdate(){
-    d3.json("/finalData/ne_10m_admin_0_sovereignty2EDIT.json").then(function(mapData){
+    d3.json("finalData/ne_10m_admin_0_sovereignty2EDIT.json").then(function(mapData){
         var projection = d3.geoNaturalEarth1()
             .scale(120)
             .translate([mapWidth*0.45, mapHeight/2])

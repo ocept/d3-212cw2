@@ -1,7 +1,7 @@
 var t2Width = 500
 let t2Height = 500
 var t2margin = {top: 30, bottom:5, left:5, right:5}
-var rawData = d3.csv('/finalData/tree3.csv')
+var rawData = d3.csv('finalData/tree3.csv')
 var tree = d3.select("#treeVis")
     .append("g")
 tree.append("div")

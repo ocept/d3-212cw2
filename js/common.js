@@ -8,7 +8,7 @@ var areaColours = {
     "Sub-Saharan Africa": colourPalette[5],
     "South Asia": colourPalette[6]
 }
-var fourColourPallet = ['#d7191c','#fdae61','#a6d96a','#1a9641']
+var fourColourPallet = ['#d7191c','#fdae61','#abd9e9','#2c7bb6']
 var wbAreaColours = {
     "World Bank High Income" : fourColourPallet[3],
     "World Bank Upper Middle Income" : fourColourPallet[2],

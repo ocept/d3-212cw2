@@ -60,7 +60,7 @@ function drawAgeVis(scrollPos){
     let t = d3.transition()
         .duration(300)
     
-    d3.csv("/finalData/ageData.csv").then(function(data){
+    d3.csv("finalData/ageData.csv").then(function(data){
         data.forEach(function(d){
             d.percent_alive = +d.percent_alive
             d.percent_dying = +d.percent_dying
